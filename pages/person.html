@@ -1,0 +1,274 @@
+<div class="per_center">
+    <div class="col-main">
+        <div class="main-wrap">
+            <div class="user-order">
+                <!--标题 -->
+                <div class="am-cf am-padding">
+                    <div class="am-fl am-cf"><strong class="am-text-AF8D am-text-lg">买家中心</strong> / <small>订单管理</small></div>
+                </div>
+                <hr>
+
+                <div class="am-tabs am-tabs-d2 am-margin" data-am-tabs="">
+                    <ul class="am-avg-sm-5 am-tabs-nav am-nav am-nav-tabs">
+                        <li class="am-active"><a data-tab="-1">所有订单</a></li>
+                        <li><a data-tab="0">卖家未确认</a></li>
+                        <li><a data-tab="1">卖家已确认</a></li>
+                        <li><a data-tab="2">待收货</a></li>
+                        <li><a data-tab="3">交易完成</a></li>
+                    </ul>
+                    <div class="order_search">
+                        <div class="am-form-group am-form-icon">
+                            <i class="am-icon-search"></i>
+                            <input type="text" class="am-form-field am-round" id="searchorder_btn" placeholder="订单编号/物料名称/买家">
+                        </div>
+                        <select class="am-round" id="searchorder_month">
+                            <option value="0">所有订单</option>
+                            <option value="1">近1个月订单</option>
+                            <option value="3">近3个月订单</option>
+                            <option value="6">近6个月订单</option>
+                            <option value="12">近1年订单</option>
+                        </select>
+                    </div>
+                    <div class="am-tabs sellorder" data-am-tabs="{noSwipe: 1}">
+                        <div class="am-tab-panel am-fade am-in am-active">
+                            <div class="order-top">
+                                <div class="th th-item">
+                                    <td class="td-inner">商品</td>
+                                </div>
+                                <div class="th th-price">
+                                    <td class="td-inner">单价</td>
+                                </div>
+                                <div class="th th-amount">
+                                    <td class="td-inner">数量</td>
+                                </div>
+                                <div class="th th-amount">
+                                    <td class="td-inner">合计</td>
+                                </div>
+                                <div class="th th-operation">
+                                    <td class="td-inner">交易状态</td>
+                                </div>
+                                <div class="th th-operation">
+                                    <td class="td-inner">交易操作</td>
+                                </div>
+                            </div>
+                            <div id="order_all"> </div>
+                        </div>
+                        <div class="am-tab-panel am-fade">
+                            <div class="order-top">
+                                <div class="th th-item">
+                                    <td class="td-inner">商品</td>
+                                </div>
+                                <div class="th th-price">
+                                    <td class="td-inner">单价</td>
+                                </div>
+                                <div class="th th-amount">
+                                    <td class="td-inner">数量</td>
+                                </div>
+                                <div class="th th-amount">
+                                    <td class="td-inner">合计</td>
+                                </div>
+                                <div class="th th-operation">
+                                    <td class="td-inner">交易状态</td>
+                                </div>
+                                <div class="th th-operation">
+                                    <td class="td-inner">交易操作</td>
+                                </div>
+                            </div>
+                            <div id="order_noconfirm"> </div>
+                        </div>
+                        <div class="am-tab-panel am-fade">
+                            <div class="order-top">
+                                <div class="th th-item">
+                                    <td class="td-inner">商品</td>
+                                </div>
+                                <div class="th th-price">
+                                    <td class="td-inner">单价</td>
+                                </div>
+                                <div class="th th-amount">
+                                    <td class="td-inner">数量</td>
+                                </div>
+                                <div class="th th-amount">
+                                    <td class="td-inner">合计</td>
+                                </div>
+                                <div class="th th-operation">
+                                    <td class="td-inner">交易状态</td>
+                                </div>
+                                <div class="th th-operation">
+                                    <td class="td-inner">交易操作</td>
+                                </div>
+                            </div>
+                            <div id="order_isconfirm"></div>
+                        </div>
+                        <div class="am-tab-panel am-fade">
+                            <div class="order-top">
+                                <div class="th th-item">
+                                    <td class="td-inner">商品</td>
+                                </div>
+                                <div class="th th-price">
+                                    <td class="td-inner">单价</td>
+                                </div>
+                                <div class="th th-amount">
+                                    <td class="td-inner">数量</td>
+                                </div>
+                                <div class="th th-amount">
+                                    <td class="td-inner">合计</td>
+                                </div>
+                                <div class="th th-operation">
+                                    <td class="td-inner">交易状态</td>
+                                </div>
+                                <div class="th th-operation">
+                                    <td class="td-inner">交易操作</td>
+                                </div>
+                            </div>
+                            <div id="order_bereceived"></div>
+                        </div>
+                        <div class="am-tab-panel am-fade">
+                            <div class="order-top">
+                                <div class="th th-item">
+                                    <td class="td-inner">商品</td>
+                                </div>
+                                <div class="th th-price">
+                                    <td class="td-inner">单价</td>
+                                </div>
+                                <div class="th th-amount">
+                                    <td class="td-inner">数量</td>
+                                </div>
+                                <div class="th th-amount">
+                                    <td class="td-inner">合计</td>
+                                </div>
+                                <div class="th th-operation">
+                                    <td class="td-inner">交易状态</td>
+                                </div>
+                                <div class="th th-operation">
+                                    <td class="td-inner">交易操作</td>
+                                </div>
+                            </div>
+                            <div id="order_close"></div>
+                        </div>
+                    </div>
+                    <ul class="am-pagination am-text-center"></ul>
+                </div>
+            </div>
+        </div>
+        <!--底部-->
+    </div>
+    <aside class="menu">
+        <ul>
+            <li class="person active">
+                <a href="pages/person.html">个人中心</a>
+            </li>
+            <li class="person">
+                <a href="pages/person.html"><i class="am-icon-balance-scale am-text-AF8D am-padding-right-xs"></i>买家中心</a>
+                <ul>
+                    <li class="active"><a href="pages/person.html">订单管理</a></li>
+                </ul>
+            </li>
+            <li class="person">
+                <a href="pages/mysell.html"><i class="am-icon-shopping-bag am-text-AF8D am-padding-right-xs"></i>卖家中心</a>
+                <ul>
+                    <li><a href="pages/mysell.html">已卖出的宝贝</a></li>
+                </ul>
+            </li>
+            <li class="person">
+                <a href="pages/address.html"><i class="am-icon-newspaper-o am-text-AF8D am-padding-right-xs"></i>个人资料</a>
+                <ul>
+                    <!--<li><a href="pages/information.html">个人信息</a></li>-->
+                    <li><a href="pages/address.html">收货地址</a></li>
+                </ul>
+            </li>
+            <li class="person">
+                <a href="pages/complaint.html"><i class="am-icon-comments am-text-AF8D am-padding-right-xs"></i>投诉建议</a>
+                <ul>
+                    <li><a href="pages/complaint.html">投诉</a></li>
+                </ul>
+            </li>
+        </ul>
+    </aside>
+</div>
+
+<div class="am-modal am-modal-prompt" tabindex="-1" id="datepick_modal">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">提示</div>
+        <div class="am-modal-bd">
+            请填写延长收货日期：
+            <input type="text" class="am-modal-prompt-input" id="datepick" data-am-datepicker="" readonly>
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn" data-am-modal-confirm>提交</span>
+        </div>
+    </div>
+</div>
+
+<div class="am-modal am-modal-prompt" tabindex="-1" id="ReAudit_modal">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">取消订单</div>
+        <div class="am-modal-bd" style="width: 100%;display: inline-block">
+            <div class="am-margin-top-sm" style="width: 100%;display: inline-block">
+                <lable class="am-u-sm-3">取消类型：</lable>
+                <select class="am-u-sm-8" style="float: left;" id="reauit_Type"><option value="我不想买了">我不想买了</option></select>
+            </div>
+            <div class="am-margin-top-sm" style="width: 100%;display: inline-block">
+                <lable class="am-u-sm-3">取消原因：</lable>
+                <textarea class="am-u-sm-8" style="float: left;" name="" id="reauit_Reson" rows="3"></textarea>
+            </div>
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn" data-am-modal-confirm>提交</span>
+        </div>
+    </div>
+</div>
+
+<div class="am-modal am-modal-prompt" tabindex="-1" id="ReClose_modal">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">取消订单</div>
+        <div class="am-modal-bd" style="width: 100%;display: inline-block">
+            卖家已经开始发货，此次取消订单需双方同意后才可生效。
+            <div class="am-margin-top-sm" style="width: 100%;display: inline-block">
+                <lable class="am-u-sm-3">取消类型：</lable>
+                <select class="am-u-sm-8" style="float: left;" id="reclose_Type"><option value="货物问题">货物问题</option></select>
+            </div>
+            <div class="am-margin-top-sm" style="width: 100%;display: inline-block">
+                <lable class="am-u-sm-3">取消原因：</lable>
+                <textarea class="am-u-sm-8" style="float: left;" name="" id="reclose_Reson" rows="3"></textarea>
+            </div>
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn" data-am-modal-confirm>提交</span>
+        </div>
+    </div>
+</div>
+
+<div class="am-modal am-modal-prompt" tabindex="-1" id="RevokeClose">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">提示</div>
+        <div class="am-modal-bd">
+            是否撤销此次取消订单操作？
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn" data-am-modal-confirm>提交</span>
+        </div>
+    </div>
+</div>
+
+<style>
+    .a:link,
+    a:visited {
+        text-decoration: none;
+        outline: none;
+        color: #000;
+    }
+    /*所有超链接不要下划线*/
+    
+    .add_scar {
+        margin-left: 10px;
+        background: #00af8d;
+    }
+</style>
+<script>
+    self.location = '/#/person';
+
+</script>

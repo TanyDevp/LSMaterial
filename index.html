@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="zh">
+    <meta charset="UTF-8">
+    <title>林氏材料订单系统</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="alternate icon" type="image/png" href="assets/images/lsico.png">
+    <link rel="stylesheet" href="assets/basic/css/amazeui.min.css" />
+    <link rel="stylesheet" href="assets/basic/css/city-picker.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link href="assets/css/person.css" rel="stylesheet">
+    <link href="assets/css/order.css" rel="stylesheet">
+</head>
+
+<body>
+    <header class="am-topbar am-topbar-fixed-top">
+        <div class="am-container">
+            <h1 class="am-topbar-brand">
+                <a href="/"><img class="main_logo" src="assets/images/ls_logo.png"></a>
+            </h1>
+
+            <div class="am-show-sm-only">
+                <div class="am-topbar-brand main_brand_search">
+                    <div class="am-form-group am-form-icon">
+                        <i class="am-icon-search"></i>
+                        <input type="text" class="main_search am-form-field" placeholder="搜索您需要的材料">
+                    </div>
+                </div>
+            </div>
+            <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" id="turn_nav" data-am-collapse="{target: '#collapse-head'}">
+                <span class="am-sr-only">导航切换</span>
+                <span class="am-icon-bars"></span>
+            </button>
+
+            <div class="am-collapse am-topbar-collapse" id="collapse-head">
+                <ul class="am-nav am-nav-pills am-topbar-nav">
+                    <li><a href="/">首页</a></li>
+                    <!--<li><a class="test-a" href="pages/item.html">其他</a></li>-->
+                    <li class="am-dropdown" id="fl_modal" data-am-dropdown>
+                        <a class="am-dropdown-toggle" data-am-dropdown-toggle>
+                            分类 
+                        <span class="am-icon-caret-down"></span>
+                        </a>
+                        <ul class="am-dropdown-content" id="fl_list">
+                            <li class="am-dropdown-header">材料分类</li>
+                            <li class="fl"><a href="#">木皮</a></li>
+                            <li class="fl"><a href="#">五金配件</a></li>
+                            <li class="fl"><a href="#">面料</a></li>
+                            <li class="fl"><a href="#">其他</a></li>
+                            <li class="fl"><a href="#">五金</a></li>
+                            <li class="fl"><a href="#">配件</a></li>
+                            <li class="fl"><a href="#">外购件</a></li>
+                            <li class="fl"><a href="#">封边条</a></li>
+                            <li class="fl"><a href="#">油漆</a></li>
+                            <li class="fl"><a href="#">板材</a></li>
+                            <li class="fl"><a href="#">软包</a></li>
+                            <li class="fl"><a href="#">板件</a></li>
+                            <li class="fl"><a href="#">包装</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <hr class="main_infohr">
+
+                <div class="am-topbar-brand am-form-feedback main_brand_search_md">
+                    <div class="am-form-group am-form-icon">
+                        <i class="am-icon-search" style="width: 20px;"></i>
+                        <input type="text" class="main_search am-form-field" placeholder="搜索您需要的材料" id="main_searchgo" >
+                        <span class="am-icon-s"><button type="submit" class="am-btn am-btn-sm am-round" id="main_searchbtn">搜索</button></span>
+                    </div>
+                </div>
+
+                <div class="am-topbar-right">
+                    <div class="am-dropdown" data-am-dropdown>
+                        <div class="am-dropdown-toggle" id="login_usertag">
+                            <!--<button class="am-btn am-topbar-btn am-btn-sm main_userinfo"><i class="am-icon-user"></i></button>-->
+                            <!--<span class="main_username">Hi!~产品线开发部</span>-->
+                        </div>
+                        <ul class="am-dropdown-content" style="font-size: 13px;">
+                            <li class="am-dropdown-header">用户信息</li>
+                            <li><a use="skpe" href="javascript:void(0);" thref="#/person">个人中心</a></li>
+                            <li><a href="javascript:void(0);" id="ud_pd">修改密码</a></li>
+                            <li><a href="#" id="quit_login">退出</a></li>
+                        </ul>
+                    </div>
+                    <button class="am-btn am-topbar-btn am-round" id="login_btn">
+                        <i class="am-icon-user am-padding-right-xs"></i>登录
+                    </button>
+                </div>
+
+                <div class="am-topbar-right am-dropdown">
+                    <a href="javascript:void(0);" thref="#/scar" use="skpe" class="am-btn am-topbar-btn am-btn-sm main_usercart am-round">
+                        <i class="am-icon-cart-plus am-padding-right-xs"></i>购物车
+                        <span class="am-badge am-badge-danger am-radius" id="carqty">0</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+
+
+    <div class="detail" id="detail">
+
+    </div>
+    <div data-am-widget="gotop" class="am-gotop am-gotop-fixed">
+        <a href="#top" class="gotopbtn" title="回到顶部">
+            <span class="am-gotop-title">回到顶部</span>
+            <i class="am-gotop-icon am-icon-chevron-up"></i>
+        </a>
+    </div>
+    <footer class="footer">
+        <!--<p>地址：广东省佛山市南海区九江镇沙头沙龙路一号铂思广场林氏木业大厦 客服热线：400-801-0404</p>-->
+        <p>Copyright © 2007-2017 产品线开发部. All Rights Reserved.</p>
+    </footer>
+
+    <div class="am-modal am-modal-no-btn" tabindex="-1" id="loadmodal"></div>
+
+    <div class="am-modal am-modal-no-btn" tabindex="-1" id="user_login">
+        <div class="am-modal-dialog">
+            <div class="am-u-sm-12 am-u-md-10 am-u-lg-10 am-u-md-centered am-u-lg-centered">
+                <div action="" class="am-form am-margin-top" id="form-with-tooltip">
+                    <fieldset>
+                        <legend class="am-margin-bottom-xs">
+                            登录
+                            <a class="am-close am-close-spin am-fr" data-am-modal-close>&times;</a>
+                        </legend>
+                        <div class="am-form-group am-text-left">
+                            <label for="ls_username">用户名：</label>
+                            <input type="text" id="ls_username" placeholder="请输入用户名" required/>
+                        </div>
+
+                        <div class="am-form-group am-text-left">
+                            <label for="ls_userpsd">密码：</label>
+                            <input type="password" id="ls_userpsd" placeholder="请输入密码" />
+                        </div>
+                        <div class="am-alert am-alert-danger am-hide alert_err" id="login_err">
+                            <button type="button" class="am-close">&times;</button>
+                            <span></span>
+                        </div>
+                        <button class="am-btn am-btn-success" type="submit" id="ls_loginbtn">登录</button>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="am-modal am-modal-no-btn" tabindex="-1" id="update_pwd">
+        <div class="am-modal-dialog">
+            <div class="am-u-sm-12 am-u-md-10 am-u-lg-10 am-u-md-centered am-u-lg-centered">
+                <div action="" class="am-form am-margin-top" id="form-with-tooltip">
+                    <fieldset>
+                        <legend class="am-margin-bottom-xs">
+                            修改密码
+                            <a class="am-close am-close-spin am-fr" data-am-modal-close>&times;</a>
+                        </legend>
+
+                        <div class="am-form-group am-text-left">
+                            <label for="ls_userpsd">原始密码：</label>
+                            <input type="password" id="ud_oldpwd" placeholder="请输入原始密码：" />
+                        </div>
+                        <div class="am-form-group am-text-left">
+                            <label for="ls_userpsd">新密码：</label>
+                            <input type="password" id="ud_newpwd" placeholder="请输入新密码" />
+                        </div>
+                        <div class="am-form-group am-text-left">
+                            <label for="ls_userpsd">确认密码：</label>
+                            <input type="password" id="ud_conpwd" placeholder="请确认密码" />
+                        </div>
+                        <div class="am-alert am-alert-danger am-hide alert_err" id="ud_err">
+                            <button type="button" class="am-close">&times;</button>
+                            <span></span>
+                        </div>
+                        <button class="am-btn am-btn-success" type="submit" data-am-modal-confirm>确认修改</button>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="am-modal am-modal-alert" tabindex="-1" id="Modalalert">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">提示</div>
+            <div class="am-modal-bd"> </div>
+            <div class="am-modal-footer">
+                <span class="am-modal-btn">确定</span>
+            </div>
+        </div>
+    </div>
+
+    <!--[if lt IE 9]>
+<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="assets/basic/js/amazeui.ie8polyfill.min.js"></script>
+<![endif]-->
+
+    <script src="assets/basic/js/jquery.min.js"></script>
+    <script src="assets/basic/js/city-picker.data.js"></script>
+    <script src="assets/basic/js/city-picker.js"></script>
+    <script src="assets/basic/js/amazeui.min.js"></script>
+    <script src="assets/basic/js/jquery.pjax.min.js"></script>
+    <script src="assets/basic/js/jquery.fly.min.js"></script>
+    <script src="assets/basic/js/amazui-pagination.js"></script>
+    <script src="assets/js/index.js"></script>
+</body>
+
+</html>

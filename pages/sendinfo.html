@@ -1,0 +1,107 @@
+<link href="../assets/css/sendinfo.css" rel="stylesheet">
+<div class="per_center">
+    <div class="col-main">
+        <div class="main-wrap">
+            <div class="user-orderinfo">
+                <!--标题 -->
+                <div class="am-cf am-padding">
+                    <div class="am-fl am-cf"><strong class="am-text-AF8D am-text-lg">订单详情</strong> / <small>发货明细</small></div>
+                </div>
+                <hr/>
+                <div class="order-infoaside">
+                    <div class="order-addresslist">
+                        <div class="order-address">
+                            <p class="am-text-center">走错方向了吧，前面直走左拐回到首页</p>
+                        </div>
+                        <div>
+                        </div>
+                    </div>
+                    <div class="order-infomain">
+                        <div class="order-top">
+                            <div class="th th-item">
+                                <td class="td-inner">商品</td>
+                            </div>
+                            <div class="th th-price">
+                                <td class="td-inner">单价</td>
+                            </div>
+                            <div class="th th-price">
+                                <td class="td-inner">订购数量</td>
+                            </div>
+                            <div class="th th-price">
+                                <td class="td-inner">实发数量</td>
+                            </div>
+                            <div class="th th-price">
+                                <td class="td-inner">实收数量</td>
+                            </div>
+                            <div class="th th-status">
+                                <td class="td-inner">交易操作</td>
+                            </div>
+                            <div class="th th-change">
+                                <td class="td-inner">交易状态</td>
+                            </div>
+                        </div>
+                        <div id="order_info"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="am-popup" id="confirm_rev">
+    <div class="am-popup-inner">
+        <div class="am-popup-hd">
+            <h4 class="am-popup-title">确认收货</h4>
+            <span data-am-modal-close class="am-close">&times;</span>
+        </div>
+        <div class="am-popup-bd" style="display: inline-block;width: 100%;overflow-x: auto;overflow-y: auto;">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                <div class="am-u-sm-12 am-margin-bottom-lg">
+                    <div class="order-top">
+                        <div class="th th-item">
+                            <td class="td-inner">商品</td>
+                        </div>
+                        <div class="th th-price">
+                            <td class="td-inner">单价</td>
+                        </div>
+                        <div class="th th-operation">
+                            <td class="td-inner">发货数量</td>
+                        </div>
+                        <div class="th th-operation">
+                            <td class="td-inner">实收数量</td>
+                        </div>
+                    </div>
+
+                    <div class="order-main">
+                        <div class="order-list">
+                            <div class="order-status"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 scar_js">
+            <div class="am-u-sm-8 am-u-md-9 am-u-lg-10">
+                <input type="text" id="Shortage_reason" placeholder="请填写缺货原因(完整收货可不填)">
+            </div>
+            <div class="am-u-sm-4 am-u-md-3 am-u-lg-2">
+                <button class="am-btn am-btn-primary am-btn-block am-btn-success" id="sure_revbtn">确认收货</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="am-modal am-modal-confirm" tabindex="-1" id="confirm_order">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">确认收货</div>
+        <div class="am-modal-bd">
+            请确认全部货物是否全部收齐，本次操作将完结此次订单。
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+        </div>
+    </div>
+</div>
+<script>
+    self.location = '/#/sendinfo';
+
+</script>

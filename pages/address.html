@@ -1,0 +1,122 @@
+<link href="../assets/css/address.css" rel="stylesheet">
+<div class="per_center">
+    <div class="col-main">
+        <div class="main-wrap">
+            <div class="user-order">
+                <!--标题 -->
+                <div class="am-cf am-padding">
+                    <div class="am-fl am-cf"><strong class="am-text-AF8D am-text-lg">个人资料</strong> / <small>收货地址</small></div>
+                </div>
+                <hr>
+
+                <div class="user-address">
+                    <ul class="am-avg-sm-1 am-avg-md-3 am-thumbnails">
+                    </ul>
+                </div>
+
+                <div class="am-modal am-modal-no-btn">
+                    <div class="add-dress">
+                        <div class="am-cf am-padding">
+                            <div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">新增地址</strong> / <small>Add&nbsp;address</small></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="doc-modal-1">
+                    <div class="add-dress">
+                        <div class="am-cf am-padding">
+                            <div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">新增地址</strong> / <small>Add&nbsp;address</small></div>
+                        </div>
+                        <hr>
+                        <div class="am-u-md-12 am-u-lg-8" style="margin-top: 20px;min-height: 600px;">
+                            <div class="am-form am-form-horizontal">
+                                <div class="am-form-group">
+                                    <label for="user-name" class="am-form-label">收货人：</label>
+                                    <div class="am-form-content">
+                                        <input type="text" class="am-input" id="user-name" placeholder="收货人">
+                                    </div>
+                                </div>
+                                <div class="am-form-group">
+                                    <label for="user-phone" class="am-form-label">手机号码：</label>
+                                    <div class="am-form-content">
+                                        <input id="user-phone" class="am-input" placeholder="手机号必填" type="tel">
+                                    </div>
+                                </div>
+
+                                <div class="am-form-group">
+                                    <label for="city-picker" class="am-form-label">所在地：</label>
+                                    <div class="am-form-icon am-form-feedback city-picker" style="width: 500px;">
+                                        <input id="city-picker" class="form-control" readonly type="text" style="width: 500px;">
+                                        <i class="am-icon-times am-close" style="opacity:0.3"></i>
+                                    </div>
+                                </div>
+
+
+                                <div class="am-form-group">
+                                    <label for="user-intro" class="am-form-label">详细地址：</label>
+                                    <div class="am-form-content">
+                                        <textarea rows="3"  class="am-input" id="user-intro" placeholder="输入详细地址"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="am-form-group">
+                                    <div class="am-u-sm-9 am-u-sm-push-3">
+                                        <button class="am-btn am-btn-success" id="save_from">保存</button>
+                                        <button class="am-btn am-btn-success" id="reset_from">重置</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--底部-->
+    </div>
+    <aside class="menu">
+        <ul>
+            <li class="person active">
+                <a href="pages/person.html">个人中心</a>
+            </li>
+            <li class="person">
+                <a href="pages/person.html"><i class="am-icon-balance-scale am-text-AF8D am-padding-right-xs"></i>买家中心</a>
+                <ul>
+                    <li><a href="pages/person.html">订单管理</a></li>
+                </ul>
+            </li>
+            <li class="person">
+                <a href="pages/mysell.html"><i class="am-icon-shopping-bag am-text-AF8D am-padding-right-xs"></i>卖家中心</a>
+                <ul>
+                    <li><a href="pages/mysell.html">已卖出的宝贝</a></li>
+                </ul>
+            </li>
+            <li class="person">
+                <a href="pages/address.html"><i class="am-icon-newspaper-o am-text-AF8D am-padding-right-xs"></i>个人资料</a>
+                <ul>
+                    <!--<li><a href="pages/information.html">个人信息</a></li>-->
+                    <li class="active"><a href="pages/address.html">收货地址</a></li>
+                </ul>
+            </li>
+            <li class="person">
+                <a href="pages/complaint.html"><i class="am-icon-comments am-text-AF8D am-padding-right-xs"></i>投诉建议</a>
+                <ul>
+                    <li><a href="pages/complaint.html">投诉</a></li>
+                </ul>
+            </li>
+        </ul>
+    </aside>
+</div>
+<style>
+    .a:link,
+    a:visited {
+        text-decoration: none;
+        outline: none;
+        color: #000;
+    }
+    /*所有超链接不要下划线*/
+</style>
+<script>
+    self.location = '/#/address';
+</script>

@@ -1,0 +1,84 @@
+@charset "utf-8";
+/* CSS Document */
+
+ 
+/*选项卡样式定义*/
+.am-nav-tabs,.am-tabs-bd{border-color:transparent ;}
+.am-nav-tabs > li.am-active > a, .am-nav-tabs > li.am-active > a:hover, .am-nav-tabs > li.am-active > a:focus,.am-nav-tabs > li > a:hover  {
+color: #555555;background:none;border-color:transparent;cursor: default;}
+.am-nav-tabs > li > a {margin-right: 0px;}
+.am-nav-tabs > li.am-active {border-bottom:2px solid #F03726;}
+.am-tabs-d2 .am-tabs-nav li {max-width:216px;}
+/*选项卡样式*/
+.am-nav-tabs> li{cursor: pointer;}
+.am-nav-tabs > li > a {
+    padding: 0px 2px;
+    margin: 0px 0px;
+    text-align: center;
+}
+
+.nav-table{display: none;}
+/*主体部分*/
+.center{width:100%; margin:0px auto;min-height: 1px; overflow:hidden;}
+aside,.wrap-right,.m-logistics,.you-like{ display:none;}
+.col-main {padding-bottom: 50px;}
+/*标题*/
+.am-text-lg{ font-size:18px;}
+.am-padding {padding:0px 10px;}
+.am-padding small{width:50%;}
+hr{margin:5px 0px;}
+
+@media only screen and (min-width:640px) 
+{			
+.per_center {
+font-size:14px ;
+}	
+	
+li.person:first-child {
+    border-bottom: 4px solid #00AF8D;
+    font-weight: 600;
+    font-size: 20px;
+    position: relative;
+}	
+	
+ 
+/*固定框架*/
+.per_center{width:96%;max-width:1000px; margin:0px auto;min-height: 1px;margin-top:15px ;}
+ 
+
+/*侧边栏*/
+aside{ display:block;width:130px; float:left;margin-left: -100%;padding-top:10px;}
+aside ul{ margin-left:10px;margin-right:-10px;padding:0px 8px;font-size:14px ;background: #fff;}
+aside a{display: block;overflow: hidden;text-decoration: none;line-height: 28px;color: #000;height: 28px;}
+aside ul li{text-align: center;}
+aside ul li.active a{color: #00AF8D}
+li.person{border-bottom:1px solid #F5F8FA ;padding-bottom:10px;padding-top: 10px;}
+.person ul{padding-left:6px; border:none; padding-top:0px; padding-bottom:0px; margin:0px auto;font-size:12px;}
+.person ul li a{color: #666;}
+/*主题*/
+.col-main {float:left;width:100%;min-height: 1px;background: none;padding-bottom: 0px;}
+.main-wrap {position: relative; margin-left:150px;overflow: hidden;min-height:585px;background-color:#fff;}
+.am-fl.am-cf small{width: auto;}
+.am-padding {margin:20px 0px ;}
+.am-text-danger {color: #000}
+ 
+
+}
+
+ 
+
+@media only screen and (min-width: 1260px) 
+
+   {
+ 
+/*固定框架*/
+.per_center{width:96%;max-width:1200px; margin:0px auto;min-height: 1px;margin-top:15px ;}
+aside {width: 160px;}
+.main-wrap {margin-left: 180px;}
+   }
+
+
+/*---------------------------------------------------------------------*/
+.person{
+    font-size: 15px;
+}

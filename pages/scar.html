@@ -1,0 +1,156 @@
+<link href="../assets/css/scar.css" rel="stylesheet">
+<div class="scar">
+    <div class="am-u-sm-12 am-u-md-12 am-u-lg-10 am-u-lg-centered">
+        <div id="cartTable">
+            <div class="cart-table-th">
+                <div class="wp" style="font-size: 14px;padding:5px 0; ">
+                    <div class="th th-chk" style="height: 1px;;">
+                    </div>
+                    <div class="th th-item">
+                        <div class="td-inner">商品信息</div>
+                    </div>
+                    <div class="th th-price">
+                        <div class="td-inner">单价</div>
+                    </div>
+                    <div class="th th-amount">
+                        <div class="td-inner">数量</div>
+                    </div>
+                    <div class="th th-sum">
+                        <div class="td-inner">金额</div>
+                    </div>
+                    <div class="th th-op">
+                        <div class="td-inner">操作</div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="car_iteminfo">
+
+            </div>
+        </div>
+    </div>
+    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 scar_js">
+        <div class="am-u-sm-8 am-u-md-9 am-u-lg-10">
+            <div class="price-sum" style="width: 100%;text-align: right;">
+                <span class="txt">已选商品</span>
+                <strong class="price">
+                    <em class="item_num">0</em>
+                </strong>
+                <span class="txt">件</span> &nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="txt">合计：</span>
+                <strong class="price">
+                    <em>
+                        <span class="total-symbol">&nbsp;￥</span><span class="total_num">0</span>
+                    </em>
+                </strong>
+            </div>
+        </div>
+        <div class="am-u-sm-4 am-u-md-3 am-u-lg-2">
+            <button class="am-btn am-btn-primary am-btn-block am-btn-success" id="confirm_btn">结算</button>
+        </div>
+    </div>
+</div>
+
+
+<div class="am-popup" id="confirm_car">
+    <div class="am-popup-inner">
+        <div class="am-popup-hd">
+            <h4 class="am-popup-title">确认订单</h4>
+            <span data-am-modal-close class="am-close">&times;</span>
+        </div>
+        <div class="am-popup-bd" style="display: inline-block;width: 100%;overflow-x: auto;overflow-y: auto;">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                <div class="am-u-sm-12" id="pre_addlist">
+                    <h3>收货地址</h3>
+                    <div id="per_rev"></div>
+                    <label class="am-radio needsclick">
+                        <input type="radio" name="pre_address" class="am-ucheck-radio new_add">
+                        <span class="am-ucheck-icons"><i class="am-icon-unchecked"></i>
+                        <i class="am-icon-checked"></i></span> 
+                        <span class="pr_adress">新增地址</span>
+                    </label>
+                </div>
+
+                <div class="am-u-sm-12 am-margin-bottom-lg">
+                    <table class="am-table" style="font-size: 13px;" id="confirm_Order">
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>类别</th>
+                                <th>物料编码</th>
+                                <th>物料名称</th>
+                                <th>物料描述</th>
+                                <th>单价</th>
+                                <th>单位</th>
+                                <th>数量</th>
+                                <th>金额</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <hr style="border-top:1px solid #009688 ">
+                    <p class="am-text-right am-padding-right-xl">
+                        总金额：
+                        <b>
+                            <em id="confirm_Pr" style="color: #f40"></em>
+                        </b>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 scar_js">
+            <div class="am-u-sm-4 am-u-md-3 am-u-lg-2 am-u-sm-offset-8 am-u-md-offset-9 am-u-lg-offset-10">
+                <button class="am-btn am-btn-primary am-btn-block am-btn-success" id="sure_order">确认订单</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="am-modal am-modal-prompt" tabindex="-1" id="address_modal" style="background:rgba(214, 214, 214, 0.7)">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">
+            请填写新收货地址
+        </div>
+        <div class="am-modal-bd">
+            <div class="am-u-sm-12" style="margin-top: 20px;">
+                <div class="am-form am-form-horizontal">
+                    <div class="am-form-group">
+                        <div class="am-form-content">
+                            <input type="text" class="am-input" id="user-name" placeholder="收货人">
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <div class="am-form-content">
+                            <input id="user-phone" class="am-input" placeholder="手机号必填" type="tel">
+                        </div>
+                    </div>
+                    <div class="am-form-group am-text-left">
+                        <div class="am-form-icon am-form-feedback city-picker" style="width: 484px;">
+                            <input id="city-picker" placeholder="所在地" class="form-control" readonly type="text" style="width: 484px;">
+                            <i class="am-icon-times am-close" style="opacity:0.3"></i>
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <div class="am-form-content">
+                            <textarea rows="3" class="am-input" id="user-intro" placeholder="输入详细地址"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn" data-am-modal-confirm>保存</span>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    self.location = '/#/scar';
+
+</script>
