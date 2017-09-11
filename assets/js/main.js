@@ -6,6 +6,7 @@
             trunUrl('/login.html');
             return;
         }
+        
         var loginuser = localStorage.user;
         if (!result.IsErr) {
             var data = result.data;
