@@ -62,4 +62,19 @@
 
 
 /*-------------------------------------------------------------------------*/
- 
+ .am-popover{
+     z-index: 999;
+     border: 1px solid #00af8d;
+     max-width: 300px;
+ }
+ .am-popover-inner{
+     color: #333;
+     background: #FFF;
+     font-size: 12px;
+ }
+ .am-popover-caret{
+     border-bottom: 8px solid #00af8d;
+ }
+ .flag_title{
+     margin: 0;
+ }

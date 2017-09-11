@@ -15,6 +15,7 @@
     }, function (result) {
         if (!result.IsErr) {
             var data = result.data;
+            var loginuser = localStorage.user;
             if (data && data.length > 0) {
                 var head = type && ('<div class="am-g am-container main_itemlist">\
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-center">\
@@ -33,21 +34,19 @@
                     </div>\
                     <div class="am-u-sm-9">\
                         <p class="main_itemtitle am-text-truncate" title="' + k.ItemName + '">' + k.ItemName + '</p>\
-                                                <p class="main_itemremark am-text-truncate" title="'+ k.SkuCode + ',' + k.SkuName + '">' + k.SkuCode + (k.SkuName && ('，' + k.SkuName) || '') + '</p>\
+                        <p class="main_itemremark am-text-truncate" title="'+ k.SkuCode + ',' + k.SkuName + '">' + k.SkuCode + (k.SkuName && ('，' + k.SkuName) || '') + '</p>\
                         <p class="main_itemremark am-text-truncate" title="'+ k.Supplier + '">' + k.Supplier + '</p>\
-                        <p class="main_itemtitle"><i class="am-icon-jpy" title="含税价"></i><em class=" am-margin-xs am-text-danger am-text-hs">'+ k.PriceN + '</em><i class="am-icon-jpy am-margin-left" title="单价"></i><em class="am-text-danger"> ' + k.Price + '</em>\
-                          <button class="am-btn am-btn-success am-btn-xs am-round am-fr add_tocar"  index="' + index + '">\
+                        '+ (loginuser == k.Seller ? ' <p class="main_itemremark am-text-truncate" title="' + k.Buyer + '">对应加工厂:' + k.Buyer + '</p>\
+                        <p class="main_itemtitle">' + (k.PriceN > 0 ? '<i class="am-icon-jpy" title="单价"></i><em class="am-text-danger"> ' + k.Price + '</em><i class="am-icon-jpy am-margin-left" title="含税价"></i><em class=" am-margin-xs am-text-danger am-text-hs">' + k.PriceN + '</em>' : '<i class="am-icon-jpy" title="单价"></i><em class="am-text-danger"> ' + k.Price + '</em>') + '</p>' :
+                            '<p class="main_itemtitle">' + (k.PriceN > 0 ? '<i class="am-icon-jpy" title="单价"></i><em class="am-text-danger"> ' + k.Price + '</em><i class="am-icon-jpy am-margin-left" title="含税价"></i><em class=" am-margin-xs am-text-danger am-text-hs">' + k.PriceN + '</em>' : '<i class="am-icon-jpy" title="单价"></i><em class="am-text-danger"> ' + k.Price + '</em>') + '\
+                          <button class="am-btn am-btn-success am-btn-xs am-round am-fr add_tocar" index="'+ index + '" title="加入购物车">\
                              <i class="am-icon-cart-plus am-padding-right-xs" ></i>\
                           </button>\
-                        </p>\
+                        </p>') + '\
                     </div >\
                 </div>\
             </div>';
                 }).join('')) + '</div>';
-
-
-
-
 
                 $('.add_tocar').click(function (event) {
                     $(".add_tocar").attr("disabled", true);
@@ -102,18 +101,20 @@
                     });
                 });
 
-                var pagination = new Pagination({
-                    wrap: $('.am-pagination'),
-                    count: result.PageCount,
-                    current: page,
-                    callback: function (page) {
-                        var url = location.href;
-                        if (url.indexOf('&page') > -1) {
-                            url = url.substring(0, url.indexOf('&page'));
-                        };
-                        trunUrl(url + '&page=' + page);
-                    }
-                });
+                if (result.PageCount > 1) {
+                    var pagination = new Pagination({
+                        wrap: $('.am-pagination'),
+                        count: result.PageCount,
+                        current: page,
+                        callback: function (page) {
+                            var url = location.href;
+                            if (url.indexOf('&page') > -1) {
+                                url = url.substring(0, url.indexOf('&page'));
+                            };
+                            trunUrl(url + '&page=' + page);
+                        }
+                    });
+                }
             }
             else {
                 $('#item_list').html('<p class="am-text-center">未找到该材料</p>');

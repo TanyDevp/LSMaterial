@@ -10,11 +10,11 @@
 
                 <div class="am-tabs am-tabs-d2 am-margin" data-am-tabs="">
                     <ul class="am-avg-sm-5 am-tabs-nav am-nav am-nav-tabs">
-                        <li class="am-active"><a data-tab="-1">所有订单</a></li>
-                        <li><a data-tab="0">卖家未确认</a></li>
-                        <li><a data-tab="1">卖家已确认</a></li>
-                        <li><a data-tab="2">待收货</a></li>
-                        <li><a data-tab="3">交易完成</a></li>
+                        <li class="am-active"><a data-tab="-1">所有订单<span class="am-badge am-badge-secondary am-margin-left"></span></a></li>
+                        <li><a data-tab="0">卖家未确认<span class="am-badge am-badge-secondary am-margin-left"></span></a></li>
+                        <li><a data-tab="1">卖家已确认<span class="am-badge am-badge-secondary am-margin-left"></span></a></li>
+                        <li><a data-tab="2">待收货<span class="am-badge am-badge-secondary am-margin-left"></span></a></li>
+                        <li><a data-tab="3">交易完成<span class="am-badge am-badge-secondary am-margin-left"></span></a></li>
                     </ul>
                     <div class="order_search">
                         <div class="am-form-group am-form-icon">
@@ -29,7 +29,7 @@
                             <option value="12">近1年订单</option>
                         </select>
                     </div>
-                    <div class="am-tabs sellorder" data-am-tabs="{noSwipe: 1}">
+                    <div class="am-tabs-bd sellorder" data-am-tabs="{noSwipe: 1}">
                         <div class="am-tab-panel am-fade am-in am-active">
                             <div class="order-top">
                                 <div class="th th-item">
@@ -161,12 +161,14 @@
                 <a href="pages/person.html"><i class="am-icon-balance-scale am-text-AF8D am-padding-right-xs"></i>买家中心</a>
                 <ul>
                     <li class="active"><a href="pages/person.html">订单管理</a></li>
+                    <li><a href="pages/regoods.html">退货管理</a></li>
                 </ul>
             </li>
             <li class="person">
                 <a href="pages/mysell.html"><i class="am-icon-shopping-bag am-text-AF8D am-padding-right-xs"></i>卖家中心</a>
                 <ul>
                     <li><a href="pages/mysell.html">已卖出的宝贝</a></li>
+                    <li><a href="pages/beregoods.html">退货管理</a></li>
                 </ul>
             </li>
             <li class="person">
@@ -254,6 +256,51 @@
     </div>
 </div>
 
+<div class="am-popup" id="edit_orderNum">
+    <div class="am-popup-inner">
+        <div class="am-popup-hd">
+            <h4 class="am-popup-title">数量修改</h4>
+            <span data-am-modal-close class="am-close">&times;</span>
+        </div>
+        <div class="am-popup-bd" style="display: inline-block;width: 100%;overflow-x: auto;overflow-y: auto;">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                <div class="am-u-sm-12 am-margin-bottom-lg">
+                    <div class="order-top">
+                        <div class="th th-item">
+                            <td class="td-inner">商品</td>
+                        </div>
+                        <div class="th th-operation">
+                            <td class="td-inner">单价</td>
+                        </div>
+                        <div class="th th-operation">
+                            <td class="td-inner">订购数量</td>
+                        </div>
+                        <div class="th th-operation">
+                            <td class="td-inner">修改数量</td>
+                        </div>
+                        <div class="th th-operation">
+                            <td class="td-inner">合计</td>
+                        </div>
+                    </div>
+
+                    <div class="order-main">
+                        <div class="order-list">
+                            <div class="order-status"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 scar_js">
+            <div class="am-u-sm-8 am-u-md-9 am-u-lg-10">
+            </div>
+            <div class="am-u-sm-4 am-u-md-3 am-u-lg-2">
+                <button class="am-btn am-btn-primary am-btn-block am-btn-success" id="sure_edit" data-am-modal-confirm>确认修改</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <style>
     .a:link,
     a:visited {
@@ -266,6 +313,10 @@
     .add_scar {
         margin-left: 10px;
         background: #00af8d;
+    }
+    
+    .am-tabs-bd.sellorder {
+        -webkit-user-select: inherit !important;
     }
 </style>
 <script>

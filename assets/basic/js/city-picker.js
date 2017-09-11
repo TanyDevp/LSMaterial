@@ -47,7 +47,6 @@
         constructor: CityPicker,
 
         init: function () {
-
             this.defineDems();
 
             this.render();
@@ -65,7 +64,6 @@
                     p.height + 'px;line-height:' + (p.height - 1) + 'px;">' +
                     (placeholder ? '<span class="placeholder">' + placeholder + '</span>' : '') +
                     '<span class="title"></span><div class="arrow"></div>' + '</span>',
-
                 dropdown = '<div class="city-picker-dropdown" style="left:0px;top:100%;' +
                     this.getWidthStyle(p.width, true) + '">' +
                     '<div class="city-select-wrap">' +
@@ -78,12 +76,10 @@
                     (this.includeDem('city') ? '<div class="city-select city" data-count="city"></div>' : '') +
                     (this.includeDem('district') ? '<div class="city-select district" data-count="district"></div>' : '') +
                     '</div></div>';
-
             this.$element.addClass('city-picker-input');
             this.$textspan = $(textspan).insertAfter(this.$element);
             this.$dropdown = $(dropdown).insertAfter(this.$textspan);
             var $select = this.$dropdown.find('.city-select');
-
             // setup this.$province, this.$city and/or this.$district object
             $.each(this.dems, $.proxy(function (i, type) {
                 this['$' + type] = $select.filter('.' + type + '');
@@ -114,6 +110,7 @@
 
         defineDems: function () {
             var stop = false;
+
             $.each([PROVINCE, CITY, DISTRICT], $.proxy(function (i, type) {
                 if (!stop) {
                     this.dems.push(type);
@@ -388,7 +385,6 @@
             }
 
             item = $select.data('item');
-
             value = (item ? item.address : null) || options[type];
 
             code = (
@@ -433,7 +429,6 @@
                     }
                 });
             }
-
             $select.html(type === PROVINCE ? this.getProvinceList(data) :
                 this.getList(data, type));
             $select.data('item', matched);
@@ -443,7 +438,6 @@
             var list = [],
                 $this = this,
                 simple = this.options.simple;
-
             $.each(data, function (i, n) {
                 list.push('<dl class="clearfix">');
                 list.push('<dt>' + i + '</dt><dd>');
@@ -469,7 +463,6 @@
                 $this = this,
                 simple = this.options.simple;
             list.push('<dl class="clearfix"><dd>');
-
             $.each(data, function (i, n) {
                 list.push(
                     '<a' +

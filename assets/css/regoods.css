@@ -6,10 +6,10 @@
     left: 0;
     float: left !important;
 }
-#sure_revbtn,#re_revbtn{
+#sure_revbtn{
     height: 50px;
 }
-.am-popup{
+#confirm_rev{
     width: 80%;height: 90%;
     left: 0;
     right: 0;
@@ -18,15 +18,15 @@
     font-size: 14px;
 }
 
-.am-popup .item-list{
+#confirm_rev .item-list{
     margin: 0;
 }
 
-.am-popup .order-left{
+#confirm_rev .order-left{
     padding: 0;
 }
  
- #Shortage_reason,#Regoods_reason{
+ #Shortage_reason{
      width: 85%;
      height: 30px;
      margin-top: 10px;
@@ -38,14 +38,14 @@
     padding-left: 24px;
     margin: 0;
 }
-#Shortage_type,#Regoods_type{
+#Shortage_type{
     float: left;
     margin-top: 10px;
     height: 30px;
     width: 120px;
 }
 @media only screen and (min-width: 1025px){
-.am-popup .th-operation,.am-popup .td-operation {
+#confirm_rev .th-operation,#confirm_rev .td-operation {
     width: 20%;
 }
 .order-addresslist {
@@ -56,12 +56,6 @@
 }
 .main-wrap {
     margin-left: 0px;
-}
-#order_info .order-right {
-    width: 20%;
-}
-#order_info .order-right .td {
-    width: 50%;
 }
 }
 @media only screen and (min-width: 640px){

@@ -8265,8 +8265,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (this.options.cancelable) {
 	    $element.on('keyup.modal.amui', function(e) {
 	      if (_this.active && e.which === 27) {
-	        $element.trigger('cancel.modal.amui');
-	        _this.close();
+	        // $element.trigger('cancel.modal.amui');
+	        // _this.close();
 	      }
 	    });
 	  }

@@ -55,7 +55,7 @@
                                 <div class="am-form-group">
                                     <label for="user-intro" class="am-form-label">详细地址：</label>
                                     <div class="am-form-content">
-                                        <textarea rows="3"  class="am-input" id="user-intro" placeholder="输入详细地址"></textarea>
+                                        <textarea rows="3" class="am-input" id="user-intro" placeholder="输入详细地址"></textarea>
                                     </div>
                                 </div>
 
@@ -84,12 +84,14 @@
                 <a href="pages/person.html"><i class="am-icon-balance-scale am-text-AF8D am-padding-right-xs"></i>买家中心</a>
                 <ul>
                     <li><a href="pages/person.html">订单管理</a></li>
+                    <li><a href="pages/regoods.html">退货管理</a></li>
                 </ul>
             </li>
             <li class="person">
                 <a href="pages/mysell.html"><i class="am-icon-shopping-bag am-text-AF8D am-padding-right-xs"></i>卖家中心</a>
                 <ul>
                     <li><a href="pages/mysell.html">已卖出的宝贝</a></li>
+                    <li><a href="pages/beregoods.html">退货管理</a></li>
                 </ul>
             </li>
             <li class="person">
@@ -108,6 +110,41 @@
         </ul>
     </aside>
 </div>
+
+<div class="am-modal am-modal-prompt" tabindex="-1" id="address_modal">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">
+            请填写修改后的地址
+        </div>
+        <div class="am-modal-bd">
+            <div class="am-u-sm-12" style="margin-top: 20px;padding-left: 15px;padding-right: 15px;">
+                <div class="am-form am-form-horizontal">
+                    <div class="am-form-group">
+                        <input type="text" class="am-input" id="edit-name" placeholder="收货人">
+                    </div>
+                    <div class="am-form-group">
+                        <input id="edit-phone" class="am-input" placeholder="手机号必填" type="tel">
+                    </div>
+                    <div class="am-form-group am-text-left">
+                        <div class="am-form-icon am-form-feedback city-picker" style="width: 484px;">
+                            <input id="edit-picker" placeholder="所在地" class="form-control" readonly type="text" style="width: 484px;">
+                            <i class="am-icon-times am-close" style="opacity:0.3"></i>
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <textarea rows="3" class="am-input" id="edit-intro" placeholder="输入详细地址"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn" data-am-modal-confirm>保存</span>
+        </div>
+    </div>
+</div>
+
+
 <style>
     .a:link,
     a:visited {
@@ -116,6 +153,26 @@
         color: #000;
     }
     /*所有超链接不要下划线*/
+    
+    .am-popover {
+        background: #ddd;
+        border: 1px solid #ddd;
+        color: #333;
+        font-size: 13px;
+        text-align: center;
+    }
+    
+    .am-popover-inner {
+        background: snow;
+    }
+    
+    .am-popover-caret {
+        border-bottom: 8px solid #B9B9B9;
+    }
+    
+    .suretable td {
+        padding: 4px;
+    }
 </style>
 <script>
     self.location = '/#/address';

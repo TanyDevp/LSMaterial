@@ -20,24 +20,48 @@
             var val = $(this).val();
             var index = $(this).parents('.item-content').attr('index');
             var tdata = data.data[index];
-            var reg = /^[0-9]*[1-9][0-9]*$/;
+            var reg = /^((\d+)|([0-9]+\.[0-9]{0,4}))$/;
             var _this = this;
             if (!reg.test(val)) {
-                val = 1;
+                val = tdata.Qty;
+                $(_this).val(val);
+                return;
             }
             if (val > 999999) {
                 val = 999999;
+            }
+            else if (val == 0) {
+                return;
+            }
+            else if (val < 0) {
+                val = 1;
+                return;
             }
             updateNum(tdata.Guid, val, function () {
                 tdata.Qty = val;
                 $(_this).val(val);
                 totalPrice(data);
                 var pirce = tdata.HasTax == 1 ? tdata.PriceN : tdata.Price;
-                $('.car_price_' + tdata.ID + ' em').html('￥' + (pirce * val).toFixed(2));
+                $('.car_price_' + tdata.ID + ' em').html('￥' + (pirce * val).toFixed(3));
             });
 
         });
-
+        $('.text_box').change(function () {
+            var _this = this;
+            var index = $(this).parents('.item-content').attr('index');
+            var tdata = data.data[index];
+            var val = $(this).val();
+            if (val <= 0) {
+                val = 1;
+            }
+            updateNum(tdata.Guid, val, function () {
+                tdata.Qty = val;
+                $(_this).val(val);
+                totalPrice(data);
+                var pirce = tdata.HasTax == 1 ? tdata.PriceN : tdata.Price;
+                $('.car_price_' + tdata.ID + ' em').html('￥' + (pirce * val).toFixed(3));
+            });
+        });
         $('.sl .am-btn').click(function () {
             var $input = $(this).siblings('.text_box');
             var val = $input.val();
@@ -45,12 +69,18 @@
             var tdata = data.data[index];
             if ($(this).hasClass('add')) {
                 if (val < 999999) {
-                    val++;
+                    val = Number(val) + 1;
+                    if (val.toString().substr(val.toString().indexOf('.') + 1).length > 4) {
+                        val = Math.round(val * 10000) / 10000;
+                    }
                 }
             }
             else {
                 if (val > 1) {
-                    val--;
+                    val = Number(val) - 1;
+                    if (val.toString().substr(val.toString().indexOf('.') + 1).length > 4) {
+                        val = Math.round(val * 10000) / 10000;
+                    }
                 }
             }
             updateNum(tdata.Guid, val, function () {
@@ -58,7 +88,7 @@
                 $input.val(val);
                 totalPrice(data);
                 var pirce = tdata.HasTax == 1 ? tdata.PriceN : tdata.Price;
-                $('.car_price_' + tdata.ID + ' em').html('￥' + (pirce * val).toFixed(2));
+                $('.car_price_' + tdata.ID + ' em').html('￥' + (pirce * val).toFixed(3));
             });
         });
 
@@ -185,10 +215,10 @@
                                         <div class="price-line">\
                                             <em class="J_Price price-now" tabindex="0">￥'+ (x.HasTax == 1 ? x.PriceN : x.Price) + '</em>\
                                             <span>/'+ x.Unit + '</span>\
-                                            <div class="hs_view">\
+                                            '+ (x.PriceN > 0 ? '<div class="hs_view">\
                                                 <lable>含税</lable>\
                                                 <input type="checkbox" class="sc_hs" '+ (x.HasTax == 1 ? 'checked' : '') + '>\
-                                           </div>\
+                                            </div>' : '') + '\
                                         </div>\
                                     </div>\
                                 </div>\
@@ -210,7 +240,7 @@
                             </li>\
                             <li class="td td-sum">\
                                 <div class="td-inner car_price_'+ x.ID + '">\
-                                    <em tabindex="0" class="J_ItemSum number">￥'+ (x.Qty * (x.HasTax == 1 ? x.PriceN : x.Price)).toFixed(2) + '</em>\
+                                    <em tabindex="0" class="J_ItemSum number">￥'+ (x.Qty * (x.HasTax == 1 ? x.PriceN : x.Price)).toFixed(3) + '</em>\
                                 </div>\
                             </li>\
                             <li class="td td-op">\
@@ -274,7 +304,7 @@
             checklist.push(tdata.Guid);
             total += (tdata.Qty * (tdata.HasTax == 1 ? tdata.PriceN : tdata.Price));
         });
-        $('.total_num').html(total.toFixed(2));
+        $('.total_num').html(total.toFixed(3));
     }
 
     function getadress(fn) {
@@ -363,7 +393,7 @@
                         <td>'+ price + '</td>\
                         <td>'+ k.Unit + '</td>\
                         <td>'+ k.Qty + '</td>\
-                        <td>'+ (k.Qty * price).toFixed(2) + '</td>\
+                        <td>'+ (k.Qty * price).toFixed(3) + '</td>\
                        </tr>'+
                     (index == tData.length - 1 ? '<tr>\
                                         <td colspan="10"><input type="text" class="am-form-field am-input-sm" placeholder="请填写买家备注" rmkd="'+ mtd + '"/></td>\
@@ -401,7 +431,7 @@
             }).data('amui.datepicker');
             // $('.dateinput').datepicker();
 
-            $('#confirm_Pr').html('￥' + conf.toFixed(2));
+            $('#confirm_Pr').html('￥' + conf.toFixed(3));
 
             $('input[name="pre_address"]').change(function () {
                 var $collapse = $('#collapse');
@@ -515,6 +545,10 @@
                     trunUrl('../pages/person.html');
                 }
                 else {
+                    if (data.ErrDesc.indexOf('物料被禁用') > -1) {
+                        alertModal('购物车中部分物料被禁用，请刷新页面后尝试重新操作！');
+                        return;
+                    }
                     alertModal('服务器出了点小问题，请骚后尝试操作！');
                     return;
                 }

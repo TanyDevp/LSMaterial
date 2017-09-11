@@ -11,11 +11,11 @@
 
                 <div class="am-tabs am-tabs-d2 am-margin" data-am-tabs="">
                     <ul class="am-avg-sm-5 am-tabs-nav am-nav am-nav-tabs">
-                        <li class="am-active"><a data-tab="-1">所有订单</a></li>
-                        <li><a data-tab="0">待确认</a></li>
-                        <li><a data-tab="1">未发货</a></li>
-                        <li><a data-tab="2">发货中</a></li>
-                        <li><a data-tab="3">交易完成</a></li>
+                        <li class="am-active"><a data-tab="-1">所有订单<span class="am-badge am-badge-secondary am-margin-left"></span></a></li>
+                        <li><a data-tab="0">待确认<span class="am-badge am-badge-secondary am-margin-left"></span></a></li>
+                        <li><a data-tab="1">未发货<span class="am-badge am-badge-secondary am-margin-left"></span></a></li>
+                        <li><a data-tab="2">发货中<span class="am-badge am-badge-secondary am-margin-left"></span></a></li>
+                        <li><a data-tab="3">交易完成<span class="am-badge am-badge-secondary am-margin-left"></span></a></li>
                     </ul>
                     <div class="order_search">
                         <div class="am-form-group am-form-icon">
@@ -30,7 +30,7 @@
                             <option value="12">近1年订单</option>
                         </select>
                     </div>
-                    <div class="am-tabs sellorder" data-am-tabs="{noSwipe: 1}">
+                    <div class="am-tabs-bd sellorder" data-am-tabs="{noSwipe: 1}">
                         <div class="am-tab-panel am-fade am-in am-active">
                             <div class="order-top">
                                 <div class="th th-item">
@@ -162,12 +162,14 @@
                 <a href="pages/person.html"><i class="am-icon-balance-scale am-text-AF8D am-padding-right-xs"></i>买家中心</a>
                 <ul>
                     <li><a href="pages/person.html">订单管理</a></li>
+                    <li><a href="pages/regoods.html">退货管理</a></li>
                 </ul>
             </li>
             <li class="person">
                 <a href="pages/mysell.html"><i class="am-icon-shopping-bag am-text-AF8D am-padding-right-xs"></i>卖家中心</a>
                 <ul>
                     <li class="active"><a href="pages/mysell.html">已卖出的宝贝</a></li>
+                    <li><a href="pages/beregoods.html">退货管理</a></li>
                 </ul>
             </li>
             <li class="person">
@@ -292,7 +294,22 @@
     </div>
 </div>
 
-
+<div class="am-modal am-modal-prompt" tabindex="-1" id="order_flag">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">提示</div>
+        <div class="am-modal-bd">
+            请填写订单备注(仅自己看见)：
+            <div class="am-input-group am-padding-left am-padding-right">
+                <span class="am-input-group-label"><i class="am-icon-flag am-fr order_flag_sure"></i></span>
+                <input type="text" class="am-form-field" id="flag_Remark" placeholder="请填写备注">
+            </div>
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn" data-am-modal-confirm>提交</span>
+        </div>
+    </div>
+</div>
 
 <style>
     .a:link,
@@ -300,6 +317,10 @@
         text-decoration: none;
         outline: none;
         color: #000;
+    }
+    
+    .am-tabs-bd.sellorder {
+        -webkit-user-select: inherit !important;
     }
     /*所有超链接不要下划线*/
 </style>

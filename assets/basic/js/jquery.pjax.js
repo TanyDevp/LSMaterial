@@ -237,11 +237,23 @@
                 //$(config.container).html(html);
             }
             //加载新页面js
+            var versin = '1_1';
+            //js版本
             if (url.indexOf('main') > -1) {
-                $.getScript("assets/js/main.js")
+                // $.getScript("assets/js/main.js")
+                $.ajax({
+                    url: "assets/js/main.js?versin=" + versin,
+                    dataType: "script",
+                    cache: true,
+                });
             }
             else {
-                $.getScript(url.replace('pages/', 'assets/js/').replace('.html', '.js'))
+                // $.getScript(url.replace('pages/', 'assets/js/').replace('.html', '.js'))
+                $.ajax({
+                    url: url.replace('pages/', 'assets/js/').replace('.html', '.js?versin=' + versin),
+                    dataType: "script",
+                    cache: true,
+                });
             }
             //-----------------------------
             pjax.trigger("init");

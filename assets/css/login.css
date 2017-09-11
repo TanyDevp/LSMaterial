@@ -1,0 +1,142 @@
+ .login_main {
+        background: url("../images/login2.png?v=8") top center no-repeat;
+        margin: 0px;
+        width: 100%;
+        min-height: 700px;
+        height: 100%;
+        min-width: 400px;
+    }
+    
+    .login_body {
+        text-align: center;
+        padding: 0;
+        margin: 0;
+        background: url("../images/line.jpg") left top repeat-x;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .fm-v {
+        position: absolute;
+        width: 100%;
+        top: 284px;
+    }
+    
+    .ele {
+        width: 260px;
+        height: 25px;
+        line-height: 46px;
+        font-size: 18px;
+        color: #999;
+        text-indent: 5px;
+        border: 1px solid #00AF8D;
+        border-left: 0;
+        border-right: 0;
+        border-top: 0;
+        font-family: '黑体';
+        box-sizing: content-box !important;
+        background: none;
+    }
+
+    input:focus {
+     outline: none;
+     border-color: #a5c7fe;
+    }
+    
+    .input_user {
+        margin-left: 10px;
+    }
+    
+    .input_password {
+        margin-left: 10px;
+    }
+    
+    .btn-submit {
+        margin-top: 52px;
+    }
+    
+    .row{
+        clear: both;
+        min-width: 400px;
+    }
+    
+    #ls_loginbtn {
+        border: 0;
+        top: 198px;
+        left: 45px;
+        background: #00AF8D;
+        font-size: 18px;
+        color: #ffffff;
+        font-family: '微软雅黑';
+        cursor: pointer;
+        height: 20px;
+        width: 260px;
+    }
+    
+    #ls_loginbtn:hover {
+        background: #009A7C;
+    }
+    #ls_loginbtn:focus {
+        outline: none;
+    }
+
+     #ls_loginbtn:disabled{
+        background: rgba(0, 175, 141, 0.7);
+     }
+ .fl-controls-left{
+     min-width: 400px;
+ }
+ .am-hide{
+     display: none;
+ }
+ .login_errs{
+    background: #dd514c;
+    width: 350px;
+    margin: 0 auto;
+    margin-top: 10px;
+    color: #fff;
+    font-family: '黑体';
+    height: 25px;
+    position: absolute;
+    left: 0;
+    right: 0;
+ }
+ .am-close{
+    background: none;
+    border: none;
+    text-align: center;
+    width: 24px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .2;
+    cursor: pointer;
+    float: right;
+ }
+[class*=am-icon-] {
+    text-indent: 0px;
+}
+
+
+.loginIcon{
+    border: 1px solid #00AF8D;
+    border-radius: 50%;
+    width: 34px;
+    text-align: center;
+    font-size: 20px;
+    color: #00AF8D;
+}
+
+.ls_logo{
+    top: 140px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 100px white inset;
+}

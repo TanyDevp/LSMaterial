@@ -119,7 +119,10 @@
         }
     }
     .main_brand_search,.main_brand_search_md{
-        width: 49%;
+        width:-moz-calc(72% - 360px);
+        width:-webkit-calc(72% - 360px); 
+        width: calc(72% - 360px);
+        min-width: 330px;
     }
      .main_brand_search .am-icon-search,.main_brand_search_md .am-icon-search{
         left: 1em;

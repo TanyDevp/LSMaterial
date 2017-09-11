@@ -2,6 +2,11 @@
 
     //获取物料列表
     $.get(posturl + "mtpmaterial/Home?SessionKey=" + localStorage.lsid, function (result) {
+        if (result.IsPass == false) {
+            trunUrl('/login.html');
+            return;
+        }
+        var loginuser = localStorage.user;
         if (!result.IsErr) {
             var data = result.data;
             var catData = result.catData;
@@ -29,11 +34,13 @@
                         <p class="main_itemtitle am-text-truncate" title="' + k.ItemName + '">' + k.ItemName + '</p>\
                         <p class="main_itemremark am-text-truncate" title="'+ k.SkuCode + ',' + k.SkuName + '">' + k.SkuCode + (k.SkuName && ('，' + k.SkuName) || '') + '</p>\
                         <p class="main_itemremark am-text-truncate" title="'+ k.Supplier + '">' + k.Supplier + '</p>\
-                        <p class="main_itemtitle"><i class="am-icon-jpy" title="含税价"></i><em class=" am-margin-xs am-text-danger am-text-hs">'+ k.PriceN + '</em><i class="am-icon-jpy am-margin-left" title="单价"></i><em class="am-text-danger"> ' + k.Price + '</em>\
+                        '+ (loginuser == k.Seller ? ' <p class="main_itemremark am-text-truncate" title="' + k.Buyer + '">对应加工厂:' + k.Buyer + '</p>\
+                        <p class="main_itemtitle">' + (k.PriceN > 0 ? '<i class="am-icon-jpy" title="单价"></i><em class="am-text-danger"> ' + k.Price + '</em><i class="am-icon-jpy am-margin-left" title="含税价"></i><em class=" am-margin-xs am-text-danger am-text-hs">' + k.PriceN + '</em>' : '<i class="am-icon-jpy" title="单价"></i><em class="am-text-danger"> ' + k.Price + '</em>')+'</p>' :
+                                    '<p class="main_itemtitle">' + (k.PriceN > 0 ? '<i class="am-icon-jpy" title="单价"></i><em class="am-text-danger"> ' + k.Price + '</em><i class="am-icon-jpy am-margin-left" title="含税价"></i><em class=" am-margin-xs am-text-danger am-text-hs">' + k.PriceN + '</em>' : '<i class="am-icon-jpy" title="单价"></i><em class="am-text-danger"> ' + k.Price + '</em>') + '\
                           <button class="am-btn am-btn-success am-btn-xs am-round am-fr add_tocar" index="'+ x_index + '_' + k_index + '" title="加入购物车">\
                              <i class="am-icon-cart-plus am-padding-right-xs" ></i>\
                           </button>\
-                        </p>\
+                        </p>') + '\
                     </div >\
                 </div>\
             </div>';

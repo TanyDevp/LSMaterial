@@ -75,6 +75,16 @@
                     }
                     //----------------------------------
                     if (!data.IsErr) {
+                        $('.am-nav-tabs li a').map(function (x) {
+                            var tab = $(this).attr('data-tab');
+                            if (tab >= 0 && tab < 3) {
+                                if (data.StageQty[tab].Qty > 0) {
+                                    $(this).find('.am-badge').html(data.StageQty[tab].Qty);
+                                }
+                            }
+                        });
+
+
                         if (data.data.length > 0) {
                             var order = data.data.map(function (x, index) {
                                 var stage = x.Stage;
@@ -85,7 +95,7 @@
                                         <div class="order-title">\
                                             <div class="dd-num">订单编号：<a>'+ x.PurchaseNO + '</a></div>\
                                             <span class="dd-num">成交时间：'+ ChangeDateFormat(x.CreateDate) + '</span>\
-                                            <span style="padding-right:30px;">配送方式：'+ (x.ShippingMethod == 0 ? '送货' : '自提') + '</span>\
+                                            <span style="padding-right:30px;"><a href="javascript:void(0);" mail="'+ math + '">配送方式：' + (x.ShippingMethod == 0 ? '送货' : '自提') + '</a></span>\
                                             <span>材料商：'+ x.Seller + '</span>\
                                         </div>\
                                         <div class="order-content">\
@@ -121,7 +131,7 @@
                                             <div class="order-right">\
                                                 <li class="td td-amount">\
                                                     <div class="item-amount">\
-                                                        合计：'+ x.TotalFee.toFixed(2) + '\
+                                                        合计：'+ x.TotalFee.toFixed(3) + '\
                                                     </div>\
                                                 </li>\
                                                #orderType#\
@@ -134,21 +144,28 @@
                                 switch (stage.toString()) {
                                     case '0':
                                         dom = dom.replace('#orderType#', '<div class="move-right">\
-                                                    <li class="td td-operation" style="'+ (x.data.length == 1 ? 'margin-top:-9%;' : '') + '">\
+                                                    <li class="td td-operation" style="'+ (x.data.length == 1 ? 'margin-top:-9%;' : 'margin-top:-5%;') + '">\
                                                         <div class="item-status">\
                                                             <p class="Mystatus">等待卖家确认</p>\
                                                             <p class="Mystatus">交货日期<br\>'+ ChangeDate(x.DeliveryDate) + '</p>\
                                                         </div>\
                                                     </li>\
-                                                    <li class="td td-operation">\
+                                                    <li class="td td-operation" style="'+ (x.data.length == 1 ? 'margin-top:-8%;' : 'margin-top:-5%;') + '">\
                                                         <button class="am-btn am-btn-danger anniu" name="'+ math + '" idx="' + index + '">取消订单</button>\
+                                                        <p class="Mystatus"><a math="'+ math + '" href="javascript:void(0);">修改数量</a></p>\
                                                     </li>\
                                                 </div>');
                                         $('#order_noconfirm').append(dom);
                                         // $('#order_all').append(dom);
                                         $('button[name="' + math + '"]').click(function () {
                                             ReAudit(x.PurchaseNO)
-                                        })
+                                        });
+
+                                        $('a[math="' + math + '"]').click(function () {
+                                            edit_order(x);
+                                        });
+
+
                                         break;
                                     case '1':
                                         dom = dom.replace('#orderType#', '<div class="move-right">\
@@ -159,7 +176,7 @@
                                                             '+ (x.IsBuyerDelay == 1 ? '<p class="Mystatus" style="color: #dd514c;">延期发货<br\>' + ChangeDate(x.DelaySendDate) + '</p>' : '') + '\
                                                         </div>\
                                                     </li>\
-                                                    <li class="td td-operation">\
+                                                    <li class="td td-operation" style="margin-top:-5%;">\
                                                         '+ (x.IsBuyerDelay > 0 ? '<p class="Mystatus">待卖家确认日期</p>' : '<button class="am-btn am-btn-danger anniu" name="' + math + '" idx="' + index + '">确认可收货</button>\
                                                         <p class="Mystatus"><a href="javascript:void(0);" grep="'+ math + '">延期发货</a></p>') + '\
                                                     </li>\
@@ -189,7 +206,7 @@
                                         dom = dom.replace('#orderType#', '<div class="move-right">\
                                                     <li class="td td-operation" style="' + ((1 == 1) ? 'margin-top:-13%;' : '') + '">\
                                                         <div class="item-status">\
-                                                            <p class="Mystatus">卖家发货</p>\
+                                                            <p class="Mystatus">'+ (x.HasSent > 0 ? '<span style="color:#f40;">卖家已发货</span>' : '卖家未发货') + '</p>\
                                                               '+ (x.IsBuyerDelay == 1 ? (x.IsSellerAgreeDelay == 1 ? ('<p class="Mystatus" style="color: #00af8d">同意延期发货<br\>' + ChangeDate(x.DelaySendDate) + '</p>')
                                                 : x.IsSellerAgreeDelay == 2 ? ('<p class="Mystatus" style="color: #dd514c;">不同意延期发货<br\>按原发货时间<br\>' + ChangeDate(x.PreSendDate) + '</p>') : '<p class="Mystatus" style="color: #00af8d">申请延期发货<br\>' + ChangeDate(x.DelaySendDate) + '</p>') :
                                                 '<p class="Mystatus">发货日期<br\>' + ChangeDate(x.PreSendDate) + '</p>') + '\
@@ -198,7 +215,7 @@
                                                     </li>\
                                                     <li class="td td-operation" style="margin-top:-5%;">\
                                                         <button class="am-btn am-btn-danger anniu" name="'+ math + '" idx="' + index + '">确认收货</button>\
-                                                        <p class="Mystatus">'+ (x.IsBuyerRequestClosed == 1 ? '<a href="javascript:void(0);" rkclose="' + math + '">撤销申请</a>' : x.IsBuyerRequestClosed == 0 ? '<a href="javascript:void(0);" close="' + math + '">取消订单</a>' : '已撤销申请') + '</p>\
+                                                        <p class="Mystatus">'+ (x.IsBuyerRequestClosed == 1 ? '<a href="javascript:void(0);" rkclose="' + math + '">撤销申请</a>' : '<a href="javascript:void(0);" close="' + math + '">取消订单</a>') + '</p>\
                                                     </li>\
                                                 </div>');
                                         $('#order_bereceived').append(dom);
@@ -219,14 +236,13 @@
                                         break;
                                     case '3':
                                         dom = dom.replace('#orderType#', '<div class="move-right">\
-                                                    <li class="td td-operation">\
+                                                    <li class="td td-operation" style="margin-top:-5%;">\
                                                         <div class="item-status">\
                                                             <p class="Mystatus">已收货</p>\
                                                             <p class="Mystatus"><a href="javascript:void(0);" name="'+ math + '" style="color: #dd514c">发货详情</a></p>\
                                                         </div>\
                                                     </li>\
-                                                    <li class="td td-operation">\
-                                                       \
+                                                    <li class="td td-operation" style="margin-top:-3%;">\
                                                         <p class="Mystatus">交易完成</p>\
                                                     </li>\
                                                 </div>');
@@ -246,13 +262,13 @@
                                         break;
                                     default:
                                         dom = dom.replace('#orderType#', '<div class="move-right">\
-                                                    <li class="td td-operation">\
+                                                    <li class="td td-operation" style="margin-top:-5%;">\
                                                         <div class="item-status">\
                                                              <p class="Mystatus">'+ (x.Stage == 10 ? '买家取消' : x.Stage == 11 ? '卖家取消' : '双方取消') + '</p>\
                                                              <p class="Mystatus"><a href="javascript:void(0);" name="'+ math + '" style="color: #dd514c">订单详情</a></p>\
                                                         </div>\
                                                     </li>\
-                                                    <li class="td td-operation">\
+                                                    <li class="td td-operation" style="margin-top:-3%;">\
                                                         <p class="Mystatus">交易关闭</p>\
                                                     </li>\
                                                 </div>');
@@ -263,10 +279,18 @@
                                         });
                                         break;
                                 }
-
                                 $('.moreoder[odrbtn="' + math + '"]').click(function () {
                                     $('ul[odr="' + math + '"]').removeClass('hideorder');
                                     $(this).remove();
+                                });
+
+                                $('a[mail="' + math + '"]').click(function () {
+                                    alertModal('<div class="am-text-left">\
+                                                <p>买家名称：' + x.Buyer + '</p>\
+                                                <p>联系人：' + (x.BuyerAddress.Person || '') + '</p>\
+                                                <p>联系电话：' + (x.BuyerAddress.TelPhone || '') + '</p>\
+                                                <p>收货地址：' + (x.BuyerAddress.Address || '') + '</p>\
+                                              </div>');
                                 });
                             });
                             $('.add_scar').click(function (event) {
@@ -320,28 +344,31 @@
                                     dataType: 'json'
                                 });
                             });
-                            var pagination = new Pagination({
-                                wrap: $('.am-pagination'),
-                                count: data.PageCount,
-                                current: data.CurrentPage,
-                                callback: function (page) {
-                                    var url = location.href;
-                                    if (url.indexOf('page') > -1) {
-                                        if (url.indexOf('&') > -1) {
-                                            url = url.substring(0, url.indexOf('&page'));
-                                        }
-                                        else {
-                                            url = url.substring(0, url.indexOf('?'));
-                                        }
-                                    };
-                                    if (url.indexOf('?') > -1) {
-                                        trunUrl(url + '&page=' + page);
-                                    } else {
-                                        trunUrl(url + '?page=' + page);
-                                    }
 
-                                }
-                            });
+                            if (data.PageCount > 1) {
+                                var pagination = new Pagination({
+                                    wrap: $('.am-pagination'),
+                                    count: data.PageCount,
+                                    current: data.CurrentPage,
+                                    callback: function (page) {
+                                        var url = location.href;
+                                        if (url.indexOf('page') > -1) {
+                                            if (url.indexOf('&') > -1) {
+                                                url = url.substring(0, url.indexOf('&page'));
+                                            }
+                                            else {
+                                                url = url.substring(0, url.indexOf('?'));
+                                            }
+                                        };
+                                        if (url.indexOf('?') > -1) {
+                                            trunUrl(url + '&page=' + page);
+                                        } else {
+                                            trunUrl(url + '?page=' + page);
+                                        }
+
+                                    }
+                                });
+                            }
                         }
                         else {
                             $('.sellorder div[id^="sell"]').html('<p class="am-text-center">未找到相关订单</p>');
@@ -371,6 +398,16 @@
                     }
                     //----------------------------------
                     if (!data.IsErr) {
+
+                        $('.am-nav-tabs li a').map(function (x) {
+                            var tab = $(this).attr('data-tab');
+                            if (tab >= 0 && tab < 3) {
+                                if (data.StageQty[tab].Qty > 0) {
+                                    $(this).find('.am-badge').html(data.StageQty[tab].Qty);
+                                }
+                            }
+                        });
+
                         if (data.data.length > 0) {
                             var order = data.data.map(function (x, index) {
                                 var stage = x.Stage;
@@ -381,7 +418,7 @@
                                         <div class="order-title">\
                                             <div class="dd-num">订单编号：<a>'+ x.PurchaseNO + '</a></div>\
                                             <span class="dd-num">成交时间：'+ ChangeDateFormat(x.CreateDate) + '</span>\
-                                            <span style="padding-right:30px;">配送方式：'+ (x.ShippingMethod == 0 ? '送货' : '自提') + '</span>\
+                                            <span style="padding-right:30px;"><a href="javascript:void(0);" mail="'+ math + '">配送方式：' + (x.ShippingMethod == 0 ? '送货' : '自提') + '</a></span>\
                                             <span>材料商：'+ x.Seller + '</span>\
                                         </div>\
                                         <div class="order-content">\
@@ -417,7 +454,7 @@
                                             <div class="order-right">\
                                                 <li class="td td-amount">\
                                                     <div class="item-amount">\
-                                                        合计：'+ x.TotalFee.toFixed(2) + '\
+                                                        合计：'+ x.TotalFee.toFixed(3) + '\
                                                     </div>\
                                                 </li>\
                                                #orderType#\
@@ -431,21 +468,26 @@
                                 switch (stage.toString()) {
                                     case '0':
                                         dom = dom.replace('#orderType#', '<div class="move-right">\
-                                                    <li class="td td-operation" style="'+ (x.data.length == 1 ? 'margin-top:-9%;' : '') + '">\
+                                                    <li class="td td-operation" style="'+ (x.data.length == 1 ? 'margin-top:-9%;' : 'margin-top:-5%;') + '">\
                                                         <div class="item-status">\
                                                             <p class="Mystatus">等待卖家确认</p>\
                                                             <p class="Mystatus">交货日期<br\>'+ ChangeDate(x.DeliveryDate) + '</p>\
                                                         </div>\
                                                     </li>\
-                                                    <li class="td td-operation">\
+                                                    <li class="td td-operation" style="'+ (x.data.length == 1 ? 'margin-top:-8%;' : 'margin-top:-5%;') + '">\
                                                         <button class="am-btn am-btn-danger anniu" name="'+ math + '" idx="' + index + '">取消订单</button>\
+                                                        <p class="Mystatus"><a math="'+ math + '" href="javascript:void(0);">修改数量</a></p>\
                                                     </li>\
                                                 </div>');
                                         // $('#order_noconfirm').append(dom);
                                         $('#order_all').append(dom);
                                         $('button[name="' + math + '"]').click(function () {
                                             ReAudit(x.PurchaseNO)
-                                        })
+                                        });
+
+                                        $('a[math="' + math + '"]').click(function () {
+                                            edit_order(x);
+                                        });
                                         break;
                                     case '1':
                                         dom = dom.replace('#orderType#', '<div class="move-right">\
@@ -456,7 +498,7 @@
                                                             '+ (x.IsBuyerDelay == 1 ? '<p class="Mystatus" style="color: #dd514c;">延期发货<br\>' + ChangeDate(x.DelaySendDate) + '</p>' : '') + '\
                                                         </div>\
                                                     </li>\
-                                                    <li class="td td-operation">\
+                                                    <li class="td td-operation" style="margin-top:-5%;">\
                                                         '+ (x.IsBuyerDelay > 0 ? '<p class="Mystatus">待卖家确认日期</p>' : '<button class="am-btn am-btn-danger anniu" name="' + math + '" idx="' + index + '">确认可收货</button>\
                                                         <p class="Mystatus"><a href="javascript:void(0);" grep="'+ math + '">延期发货</a></p>') + '\
                                                     </li>\
@@ -495,7 +537,7 @@
                                                     </li>\
                                                     <li class="td td-operation" style="margin-top:-5%;">\
                                                         <button class="am-btn am-btn-danger anniu" name="'+ math + '" idx="' + index + '">确认收货</button>\
-                                                        <p class="Mystatus">'+ (x.IsBuyerRequestClosed == 1 ? '<a href="javascript:void(0);" rkclose="' + math + '">撤销申请</a>' : x.IsBuyerRequestClosed == 0 ? '<a href="javascript:void(0);" close="' + math + '">取消订单</a>' : '已撤销申请') + '</p>\
+                                                        <p class="Mystatus">'+ (x.IsBuyerRequestClosed == 1 ? '<a href="javascript:void(0);" rkclose="' + math + '">撤销申请</a>' : '<a href="javascript:void(0);" close="' + math + '">取消订单</a>') + '</p>\
                                                     </li>\
                                                 </div>');
                                         // $('#order_bereceived').append(dom);
@@ -517,14 +559,13 @@
                                         break;
                                     case '3':
                                         dom = dom.replace('#orderType#', '<div class="move-right">\
-                                                    <li class="td td-operation">\
+                                                    <li class="td td-operation" style="margin-top:-5%;">\
                                                         <div class="item-status">\
                                                             <p class="Mystatus">已收货</p>\
                                                             <p class="Mystatus"><a href="javascript:void(0);" name="'+ math + '" style="color: #dd514c">发货详情</a></p>\
                                                         </div>\
                                                     </li>\
-                                                    <li class="td td-operation">\
-                                                        \
+                                                    <li class="td td-operation" style="margin-top:-3%;">\
                                                         <p class="Mystatus">交易完成</p>\
                                                     </li>\
                                                 </div>');
@@ -544,13 +585,13 @@
                                         break;
                                     default:
                                         dom = dom.replace('#orderType#', '<div class="move-right">\
-                                                    <li class="td td-operation">\
+                                                    <li class="td td-operation" style="margin-top:-5%;">\
                                                         <div class="item-status">\
                                                              <p class="Mystatus">'+ (x.Stage == 10 ? '买家取消' : x.Stage == 11 ? '卖家取消' : '双方取消') + '</p>\
                                                              <p class="Mystatus"><a href="javascript:void(0);" name="'+ math + '" style="color: #dd514c">订单详情</a></p>\
                                                         </div>\
                                                     </li>\
-                                                    <li class="td td-operation">\
+                                                    <li class="td td-operation" style="margin-top:-3%;">\
                                                         <p class="Mystatus">交易关闭</p>\
                                                     </li>\
                                                 </div>');
@@ -565,6 +606,15 @@
                                 $('.moreoder[odrbtn="' + math + '"]').click(function () {
                                     $('ul[odr="' + math + '"]').removeClass('hideorder');
                                     $(this).remove();
+                                });
+
+                                $('a[mail="' + math + '"]').click(function () {
+                                    alertModal('<div class="am-text-left">\
+                                                <p>买家名称：' + x.Buyer + '</p>\
+                                                <p>联系人：' + (x.BuyerAddress.Person || '') + '</p>\
+                                                <p>联系电话：' + (x.BuyerAddress.TelPhone || '') + '</p>\
+                                                <p>收货地址：' + (x.BuyerAddress.Address || '') + '</p>\
+                                              </div>');
                                 });
                             });
 
@@ -620,28 +670,32 @@
                                 });
                             });
 
-                            var pagination = new Pagination({
-                                wrap: $('.am-pagination'),
-                                count: data.PageCount,
-                                current: data.CurrentPage,
-                                callback: function (page) {
-                                    var url = location.href;
-                                    if (url.indexOf('page') > -1) {
-                                        if (url.indexOf('&') > -1) {
-                                            url = url.substring(0, url.indexOf('&page'));
-                                        }
-                                        else {
-                                            url = url.substring(0, url.indexOf('?'));
-                                        }
-                                    };
-                                    if (url.indexOf('?') > -1) {
-                                        trunUrl(url + '&page=' + page);
-                                    } else {
-                                        trunUrl(url + '?page=' + page);
-                                    }
 
-                                }
-                            });
+                            if (data.PageCount > 1) {
+                                var pagination = new Pagination({
+                                    wrap: $('.am-pagination'),
+                                    count: data.PageCount,
+                                    current: data.CurrentPage,
+                                    callback: function (page) {
+                                        var url = location.href;
+                                        if (url.indexOf('page') > -1) {
+                                            if (url.indexOf('&') > -1) {
+                                                url = url.substring(0, url.indexOf('&page'));
+                                            }
+                                            else {
+                                                url = url.substring(0, url.indexOf('?'));
+                                            }
+                                        };
+                                        if (url.indexOf('?') > -1) {
+                                            trunUrl(url + '&page=' + page);
+                                        } else {
+                                            trunUrl(url + '?page=' + page);
+                                        }
+
+                                    }
+                                });
+                            }
+
                         }
                         else {
                             $('.sellorder div[id^="sell"]').html('<p class="am-text-center">未找到相关订单</p>');
@@ -866,4 +920,159 @@
         });
     }
     // $('#datepick').datepicker();
+
+
+    function edit_order(x) {
+        var $modal = $('#edit_orderNum');
+        var order = $modal.find('.order-status');
+        order.empty();
+        var postdata = [];
+        x.data.map(function (t, index) {
+            postdata.push({ Guid: t.Guid, Qty: t.Qty });
+            var mtd = Math.random().toString().substring(2);
+            var tPrice = t.HasTax == 1 ? t.PriceN : t.Price;
+            var bsdom = '<div class="order-status">\
+                                <div class="order-content">\
+                                    <div class="order-left">\
+                                        <ul class="item-list">\
+                                            <li class="td td-item">\
+                                                <div class="item-pic">\
+                                                    <a class="J_MakePoint">\
+                                                        <img src="'+ t.SkuPic + '" class="itempic J_ItemImg">\
+                                                    </a>\
+                                                </div>\
+                                                <div class="item-info">\
+                                                    <div class="item-basic-info">\
+                                                        <a>\
+                                                         <p>'+ t.ItemName + '</p>\
+                                                         <p class="info-little">物料：'+ t.SkuCode + '\
+                                                         <br/>规格：'+ t.SkuName + ' </p>\
+                                                        </a>\
+                                                    </div>\
+                                                </div>\
+                                            </li>\
+                                            <li class="td td-operation">\
+                                                <div class="item-price">\
+                                                    '+ tPrice + '\
+                                                </div>\
+                                            </li>\
+                                            <li class="td td-operation">\
+                                                <div class="item-number">\
+                                                    <span>×</span>'+ t.Qty + '\
+                                                </div>\
+                                            </li>\
+                                            <li class="td td-operation">\
+                                                <div class="item-operation">\
+                                                <div class="sl" mtd="'+ mtd + '">\
+                                                    <button class="min am-btn am-btn-default">\
+                                                        <i class="am-icon-minus"></i>\
+                                                    </button>\
+                                                        <input class="text_box am-text-center" type="tel" value="'+ t.Qty + '" style="width:50px;">\
+                                                    <button class="add am-btn am-btn-default">\
+                                                        <i class="am-icon-plus"></i>\
+                                                    </button>\
+                                                </div>\
+                                            </li>\
+                                            <li class="td td-operation">\
+                                                <div class="item-number">\
+                                                    ￥'+ t.Qty * tPrice + '\
+                                                </div>\
+                                            </li>\
+                                        </ul>\
+                                    </div>\
+                                </div>\
+                            </div>';
+
+            order.append(bsdom);
+
+            $('.sl[mtd="' + mtd + '"] .text_box').keyup(function () {
+                var val = $(this).val();
+                var reg = /^((\d+)|([0-9]+\.[0-9]{0,4}))$/;
+                if (!reg.test(val)) {
+                    val = t.Qty;
+                }
+                if (val > 999999) {
+                    val = 999999;
+                }
+                else if (val == 0) {
+                    return;
+                }
+                else if (val < 0) {
+                    val = 1;
+                    return;
+                }
+                $(this).val(val);
+                postdata[index].Qty = val;
+            }).change(function () {
+                var val = $(this).val();
+                if (val <= 0) {
+                    val = 1;
+                };
+                postdata[index].Qty = val;
+                $(this).val(val);
+
+                var $total = $(this).parents('.td-operation').next().find('.item-number');
+                $total.html('￥' + val * tPrice);
+            });;
+
+            $('.sl[mtd="' + mtd + '"] .am-btn').click(function () {
+                var $input = $(this).siblings('.text_box');
+                var val = $input.val();
+                if ($(this).hasClass('add')) {
+                    if (val < 999999) {
+                        val = Number(val) + 1;
+                        if (val.toString().substr(val.toString().indexOf('.') + 1).length > 4) {
+                            val = Math.round(val * 10000) / 10000;
+                        }
+                    }
+                }
+                else {
+                    if (val - 1 > 0) {
+                        val--;
+                        if (val.toString().substr(val.toString().indexOf('.') + 1).length > 4) {
+                            val = Math.round(val * 10000) / 10000;
+                        }
+                    }
+                }
+                $input.val(val);
+                postdata[index].Qty = val;
+
+                var $total = $(this).parents('.td-operation').next().find('.item-number');
+                $total.html('￥' + val * tPrice);
+            });
+        });
+
+        $modal.modal({
+            relatedTarget: this,
+            closeViaDimmer: false,
+            closeOnConfirm: false,
+            onConfirm: function (e) {
+                if(postdata.map(function(x){return x.Qty}).indexOf(0)>-1){
+                    return false;
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: posturl + 'BuyerCenter/UpdatePurchaseQty',
+                    data: {
+                        SessionKey: localStorage.lsid,
+                        PurchaseNo: x.PurchaseNO,
+                        Guids: postdata,
+                    },
+                    success: function (data) {
+                        var ApiResult = CheckApi(data);
+                        if (!ApiResult) {
+                            return;
+                        }
+                        if (data.IsErr) {
+                            alertModal('服务器出了点小问题，请骚后尝试操作！');
+                            return;
+                        }
+                        else {
+                            location.reload();
+                        }
+                    }
+                });
+            },
+        });
+    }
 })(window, $)

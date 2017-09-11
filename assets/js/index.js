@@ -2,7 +2,7 @@
 
 $('#loadmodal').modal('open');
 var pjax = CoffcePJAX;
-var posturl = 'http://119.145.166.182:8806/lsmaterial/';
+var posturl = location.port == 8890 ? 'http://119.145.166.182:8806/lsmaterial/' : 'http://localhost:56952/';
 // var pathname = location.hash;
 // if (pathname.indexOf('#/') > -1) {
 //     pjax.turn(pathname.replace('#/', 'pages/') + '.html');
@@ -98,6 +98,7 @@ $('#login_btn').click(function () {
     });
 });
 
+
 $('#ls_loginbtn').click(function () {
     $.ajax({
         type: 'POST',
@@ -129,7 +130,7 @@ $('#user_login input').keydown(function () {
 });
 
 $('#user_login .am-close').click(function () {
-    trunUrl('/');
+    trunUrl('/login.html');
 });
 
 $('.alert_err .am-close').click(function () {
@@ -179,7 +180,7 @@ $('#ud_pd').click(function () {
 
 $('#quit_login').click(function () {
     localStorage.clear();
-    location.reload();
+    trunUrl('/login.html');
 });
 
 function getQuery(name, url) {
@@ -256,26 +257,49 @@ function alertModal(text) {
 }
 
 Date.prototype.Format = function (fmt) { //author: meizz 
+    var thisDate = new Date(this);
     var o = {
-        "M+": this.getMonth() + 1, //月份 
-        "d+": this.getDate(), //日 
-        "h+": this.getHours(), //小时 
-        "m+": this.getMinutes(), //分 
-        "s+": this.getSeconds(), //秒 
-        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
-        "S": this.getMilliseconds() //毫秒 
+        "M+": thisDate.getMonth() + 1, //月份 
+        "d+": thisDate.getDate(), //日 
+        "h+": thisDate.getHours(), //小时 
+        "m+": thisDate.getMinutes(), //分 
+        "s+": thisDate.getSeconds(), //秒 
+        "q+": Math.floor((thisDate.getMonth() + 3) / 3), //季度 
+        "S": thisDate.getMilliseconds() //毫秒 
     };
-    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (thisDate.getFullYear() + "").substr(4 - RegExp.$1.length));
     for (var k in o)
         if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
 }
 
+function dateFormat(dateString, format) {
+    if (!dateString) return "";
+    var time = new Date(dateString.replace(/-/g, '/').replace(/T|Z/g, '').trim());
+    var o = {
+        "M+": time.getMonth() + 1, //月份
+        "d+": time.getDate(), //日
+        "h+": time.getHours(), //小时
+        "m+": time.getMinutes(), //分
+        "s+": time.getSeconds(), //秒
+        "q+": Math.floor((time.getMonth() + 3) / 3), //季度
+        "S": time.getMilliseconds() //毫秒
+    };
+    if (/(y+)/.test(format)) format = format.replace(RegExp.$1, (time.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+        if (new RegExp("(" + k + ")").test(format)) format = format.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return format;
+}
+
 function ChangeDateFormat(time) {
     if (time != null) {
         var ctime = time.replace('T', ' ');
-        var date = new Date(ctime);
-        return date.Format("yyyy-MM-dd hh:mm:ss");
+        try {
+            ctime = ctime.substring(0, ctime.length - 4);
+            return dateFormat(ctime, "yyyy-MM-dd hh:mm:ss");
+        } catch (e) {
+            return ctime;
+        }
     }
     return "";
 }
@@ -283,8 +307,7 @@ function ChangeDateFormat(time) {
 function ChangeDate(time) {
     if (time != null) {
         var ctime = time.replace('T', ' ');
-        var date = new Date(ctime);
-        return date.Format("yyyy-MM-dd");
+        return dateFormat(ctime, "yyyy-MM-dd");
     }
     return "";
 }
@@ -298,6 +321,7 @@ function isIE() { //ie?
 
 function trunUrl(href) {
     if (isIE()) {
+        window.location.href = href;
         var referLink = document.createElement('a');
         referLink.href = href;
         document.body.appendChild(referLink);

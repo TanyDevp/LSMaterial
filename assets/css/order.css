@@ -14,7 +14,7 @@
 
 /*编号*/
 .dd-num {width:50%;float: left;max-width:250px;}
-.order-title {overflow: hidden; padding:10px 0px ;}
+.order-title {overflow: hidden; padding:10px;border: 1px solid #E4EAEE;border-bottom: none;}
 .order-title span{display: none;}
 /*商品信息*/
 .item-pic {width: 80px;height: 80px;border: 1px solid #EEE;float: left;overflow: hidden;margin-top: 20px;}
@@ -71,7 +71,7 @@ vertical-align: top;margin-top: 5px;margin-left: -24px;color: #b5b5b5;font-size:
 .order-logistics .icon-log{position: absolute;top:50%;margin-top:-9px ;width: 22px;left:10px ;}
 .order-logistics span.icon{position: absolute;right: 10px;top:50%;margin-top:-10px ;}
 /*收货地址*/
-.order-addresslist{font-size:14px ;width:100% ;padding: 10px;border-top: 1px solid #E4EAEE;position: relative;}
+.order-addresslist{font-size:14px ;width:100% ;padding: 10px;border-top: 1px solid #E4EAEE;position: relative;display: inline-block;}
 .icon-add{background: url(../images/addicon.png) 4px 3px no-repeat;width: 20px;height:20px ;position: absolute;top:50%;margin-top:-10px ;}
 .new-mu_l2a,.new-tit.new-p-re {padding: 2px 0px 2px 30px;display: block;}
 .user-orderinfo .order-title,.user-orderinfo .td-status p.Mystatus{display: none;}
@@ -115,7 +115,6 @@ ul.td-changeorder {width:20%}
 
 @media only screen and (min-width:1025px) 
 {
-
 /*布局*/
 
 .th-item,.td-item{width:40%;overflow: hidden;}
@@ -232,4 +231,26 @@ ul.td-changeorder {width:20%}
     word-break: break-word;
     padding-top: 25px;
     margin: 0;
+}
+
+.move-right{width: 100%;}
+
+@media only screen and (max-width:1025px) {
+ .order-right{
+    border: 1px solid #E4EAEE;
+    border-top: none;
+ }
+}
+.order-main{
+    margin-top: 20px;
+}
+
+.order_flag{
+    cursor: pointer;
+    color: #d9d9d9;
+}
+
+.order_flag_sure{
+    cursor: pointer;
+    color: #00AF8D;
 }

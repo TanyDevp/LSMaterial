@@ -82,3 +82,52 @@ aside {width: 160px;}
 .person{
     font-size: 15px;
 }
+
+#edit_orderNum{
+    width: 70%;height: 90%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    top: 5%;
+    font-size: 14px;
+}
+
+@media only screen and (max-width: 640px){
+#edit_orderNum{
+    width: 90%;height: 90%;
+}
+.aminput label{
+    text-align: left;
+    width: 100%;
+}
+}
+@media only screen and (min-width: 640px){
+#confirm_edit_orderNumdeliver .td-price,#edit_orderNum .td-number,#edit_orderNum .td-operation {
+    margin-top: 50px;
+}
+#edit_orderNum .td.td-amount .sl{width:auto;margin-right:0 ;} 
+#edit_orderNum .td.td-amount .sl .min,.td.td-amount .sl .add{display:inline-block;}
+#edit_orderNum .td.td-amount .sl input.text_box{border:1px solid #ddd;}
+#edit_orderNum .sl .am-btn{
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    font-size: 15px;
+}
+#edit_orderNum .main-wrap {
+    margin-left: 0px;
+}
+}
+
+.scar_js{
+    bottom: 0px;
+    background: #ddd;
+    position: fixed;
+    height: 50px;
+    left: 0;
+    float: left !important;
+}
+
+#sure_edit{
+    height: 50px;
+}

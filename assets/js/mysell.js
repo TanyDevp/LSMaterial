@@ -90,6 +90,16 @@
                     }
                     //----------------------------------
                     if (!data.IsErr) {
+
+                        $('.am-nav-tabs li a').map(function (x) {
+                            var tab = $(this).attr('data-tab');
+                            if (tab >= 0 && tab < 3) {
+                                if (data.StageQty[tab].Qty > 0) {
+                                    $(this).find('.am-badge').html(data.StageQty[tab].Qty);
+                                }
+                            }
+                        });
+
                         if (data.data.length > 0) {
                             var order = data.data.map(function (x, index) {
                                 var stage = x.Stage;
@@ -102,6 +112,7 @@
                                                     <span class="dd-num">成交时间：'+ ChangeDateFormat(x.CreateDate) + '</span>\
                                                     <span style="padding-right:30px;">配送方式：'+ (x.ShippingMethod == 0 ? '送货' : '自提') + '</span>\
                                                     <span>买家：<a href="javascript:void(0)" class="show_mail" mail="'+ math + '">' + x.Buyer + '</a></span>\
+                                                    <i class="am-icon-flag am-fr '+ (x.Remark && 'order_flag_sure' || 'order_flag') + '" math="' + math + '"></i>\
                                                 </div>\
                                                 <div class="order-content">\
                                                     <div class="order-left">\
@@ -136,7 +147,7 @@
                                                     <div class="order-right">\
                                                         <li class="td td-amount">\
                                                             <div class="item-amount">\
-                                                                合计：'+ x.TotalFee.toFixed(2) + '\
+                                                                合计：'+ x.TotalFee.toFixed(3) + '\
                                                             </div>\
                                                         </li>\
                                                         #orderType#\
@@ -170,7 +181,8 @@
                                                 closeOnConfirm: false,
                                                 onConfirm: function (e) {
                                                     if (!e.data) {
-                                                        $('#datepick').addClass('input-err')
+                                                        $('#datepick').addClass('input-err');
+                                                        return;
                                                     }
                                                     var id = $(this.relatedTarget).attr('idx');
                                                     var tdata = data.data[id];
@@ -217,7 +229,7 @@
                                         break;
                                     case '2':
                                         dom = dom.replace('#orderType#', '<div class="move-right">\
-                                                            <li class="td td-operation" style="' + ((x.IsBuyerDelay == 1) ? 'margin-top:-13%;' : x.data.length < 3 ? 'margin-top:-12%;' : '') + '">\
+                                                            <li class="td td-operation" style="' + ((x.IsBuyerDelay == 1) ? 'margin-top:-13%;' : x.data.length < 3 ? 'margin-top:-11%;' : 'margin-top:-11%;') + '">\
                                                                 <div class="item-status">\
                                                                     <p class="Mystatus">可发货</p>\
                                                                      '+ (x.IsBuyerDelay == 1 ? x.IsSellerAgreeDelay == 1 ? ('<p class="Mystatus" style="color: #00af8d">同意延期发货<br\>' + ChangeDate(x.DelaySendDate) + '</p>')
@@ -241,7 +253,7 @@
                                             window.open('#/sendinfo?pno=' + x.PurchaseNO);
                                         });
                                         $('a[rkclose="' + math + '"]').click(function () {
-                                            $('#suer_senddatemodal .am-modal-bd').html('<p class="am-text-center">问题类型：' + x.RequestClosedType + '</p><p class="am-text-center">问题描述：' + x.RequestClosedReason + '</p>');
+                                            $('#suer_senddatemodal .am-modal-bd').html('<p class="am-text-center">问题类型：' + x.RequestClosedType + '</p><p class="am-text-center">问题描述：' + (x.RequestClosedReason || '无') + '</p>');
                                             $('#suer_senddatemodal').modal({
                                                 relatedTarget: this,
                                                 closeViaDimmer: false,
@@ -254,13 +266,13 @@
                                         break;
                                     case '3':
                                         dom = dom.replace('#orderType#', '<div class="move-right">\
-                                                            <li class="td td-operation">\
+                                                            <li class="td td-operation" style="margin-top:-5%;">\
                                                                 <div class="item-status">\
                                                                     <p class="Mystatus">已收货</p>\
                                                                     <p class="Mystatus"><a href="javascript:void(0);" name="'+ math + '" style="color: #dd514c">发货详情</a></p>\
                                                                 </div>\
                                                             </li>\
-                                                            <li class="td td-operation">\
+                                                            <li class="td td-operation" style="margin-top:-3%;">\
                                                              '+ (x.HasAfterDone && (x.HasAfterDone.HasDone == 0 ? '<p class="Mystatus"><a href="javascript:void(0);" grep="' + math + '" style="color: #dd514c">已申请售后</a></p>'
                                                 : '<p class="Mystatus"><a href="javascript:void(0);" grep="' + math + '" style="color: #dd514c">售后完结</a></p>') || '') + '\
                                                                 <p class="Mystatus">交易完成</p>\
@@ -276,13 +288,13 @@
                                         break;
                                     default:
                                         dom = dom.replace('#orderType#', '<div class="move-right">\
-                                                            <li class="td td-operation">\
+                                                            <li class="td td-operation" style="margin-top:-5%;">\
                                                                 <div class="item-status">\
                                                                     <p class="Mystatus">'+ (x.Stage == 10 ? '买家取消' : x.Stage == 11 ? '卖家取消' : '双方取消') + '</p>\
                                                                      <p class="Mystatus"><a href="javascript:void(0);" name="'+ math + '" style="color: #dd514c">订单详情</a></p>\
                                                                 </div>\
                                                             </li>\
-                                                            <li class="td td-operation">\
+                                                            <li class="td td-operation" style="margin-top:-3%;">\
                                                                 <p class="Mystatus">交易关闭</p>\
                                                             </li>\
                                                         </div>');
@@ -305,29 +317,50 @@
                                                 <p>收货地址：' + (x.BuyerAddress.Address || '') + '</p>\
                                               </div>');
                                 });
-                            });
-                            var pagination = new Pagination({
-                                wrap: $('.am-pagination'),
-                                count: data.PageCount,
-                                current: data.CurrentPage,
-                                callback: function (page) {
-                                    var url = location.href;
-                                    if (url.indexOf('page') > -1) {
-                                        if (url.indexOf('&') > -1) {
-                                            url = url.substring(0, url.indexOf('&page'));
-                                        }
-                                        else {
-                                            url = url.substring(0, url.indexOf('?'));
-                                        }
-                                    };
-                                    if (url.indexOf('?') > -1) {
-                                        trunUrl(url + '&page=' + page);
-                                    } else {
-                                        trunUrl(url + '?page=' + page);
-                                    }
 
-                                }
+                                $('.am-icon-flag[math="' + math + '"]').popover({
+                                    content: '<p class="flag_title">' + (x.Remark || '') + '</p>\
+                                    <p class="flag_title am-text-right" math="'+ math + '"><a href="javascript:void(0);"><i class="am-icon-edit"></i>设置</a></p>',
+                                });
+
+                                $('.flag_title[math="' + math + '"] a').click(function () {
+                                    $('#order_flag').modal({
+                                        relatedTarget: this,
+                                        closeViaDimmer: false,
+                                        closeOnConfirm: false,
+                                        onConfirm: function (e) {
+                                            var remark = $('#flag_Remark').val();
+                                            setflag(x.PurchaseNO, remark);
+                                        },
+                                    });
+                                });
+
                             });
+
+                            if (data.PageCount > 1) {
+                                var pagination = new Pagination({
+                                    wrap: $('.am-pagination'),
+                                    count: data.PageCount,
+                                    current: data.CurrentPage,
+                                    callback: function (page) {
+                                        var url = location.href;
+                                        if (url.indexOf('page') > -1) {
+                                            if (url.indexOf('&') > -1) {
+                                                url = url.substring(0, url.indexOf('&page'));
+                                            }
+                                            else {
+                                                url = url.substring(0, url.indexOf('?'));
+                                            }
+                                        };
+                                        if (url.indexOf('?') > -1) {
+                                            trunUrl(url + '&page=' + page);
+                                        } else {
+                                            trunUrl(url + '?page=' + page);
+                                        }
+
+                                    }
+                                });
+                            }
                         }
                         else {
                             $('.sellorder div[id^="sell"]').html('<p class="am-text-center">未找到相关订单</p>');
@@ -358,6 +391,16 @@
                     }
                     //----------------------------------
                     if (!data.IsErr) {
+
+                        $('.am-nav-tabs li a').map(function (x) {
+                            var tab = $(this).attr('data-tab');
+                            if (tab >= 0 && tab < 3) {
+                                if (data.StageQty[tab].Qty > 0) {
+                                    $(this).find('.am-badge').html(data.StageQty[tab].Qty);
+                                }
+                            }
+                        });
+
                         if (data.data.length > 0) {
                             var order = data.data.map(function (x, index) {
                                 var stage = x.Stage;
@@ -370,6 +413,7 @@
                                             <span class="dd-num">成交时间：'+ ChangeDateFormat(x.CreateDate) + '</span>\
                                             <span style="padding-right:30px;">配送方式：'+ (x.ShippingMethod == 0 ? '送货' : '自提') + '</span>\
                                             <span>买家：<a href="javascript:void(0)" class="show_mail" mail="'+ math + '">' + x.Buyer + '</a></span>\
+                                            <i class="am-icon-flag am-fr '+ (x.Remark && 'order_flag_sure' || 'order_flag') + '" math="' + math + '"></i>\
                                         </div>\
                                         <div class="order-content">\
                                             <div class="order-left">\
@@ -404,7 +448,7 @@
                                             <div class="order-right">\
                                                 <li class="td td-amount">\
                                                     <div class="item-amount">\
-                                                        合计：'+ x.TotalFee.toFixed(2) + '\
+                                                        合计：'+ x.TotalFee.toFixed(3) + '\
                                                     </div>\
                                                 </li>\
                                                 #orderType#\
@@ -440,6 +484,7 @@
                                                 onConfirm: function (e) {
                                                     if (!e.data) {
                                                         $('#datepick').addClass('input-err')
+                                                        return;
                                                     }
                                                     var id = $(this.relatedTarget).attr('idx');
                                                     var tdata = data.data[id];
@@ -488,7 +533,7 @@
                                         break;
                                     case '2':
                                         dom = dom.replace('#orderType#', '<div class="move-right">\
-                                                    <li class="td td-operation" style="' + ((x.IsBuyerDelay == 1) ? 'margin-top:-13%;' : x.data.length < 3 ? 'margin-top:-12%;' : '') + '">\
+                                                    <li class="td td-operation" style="' + ((x.IsBuyerDelay == 1) ? 'margin-top:-13%;' : x.data.length < 3 ? 'margin-top:-11%;' : 'margin-top:-11%;') + '">\
                                                         <div class="item-status">\
                                                             <p class="Mystatus">可发货</p>\
                                                              '+ (x.IsBuyerDelay == 1 ? x.IsSellerAgreeDelay == 1 ? ('<p class="Mystatus" style="color: #00af8d">同意延期发货<br\>' + ChangeDate(x.DelaySendDate) + '</p>')
@@ -526,13 +571,13 @@
                                         break;
                                     case '3':
                                         dom = dom.replace('#orderType#', '<div class="move-right">\
-                                                    <li class="td td-operation">\
+                                                    <li class="td td-operation" style="margin-top:-5%;">\
                                                         <div class="item-status">\
                                                             <p class="Mystatus">已收货</p>\
                                                             <p class="Mystatus"><a href="javascript:void(0);" name="'+ math + '" style="color: #dd514c">发货详情</a></p>\
                                                         </div>\
                                                     </li>\
-                                                    <li class="td td-operation">\
+                                                    <li class="td td-operation" style="margin-top:-3%;">\
                                                      '+ (x.HasAfterDone && (x.HasAfterDone.HasDone == 0 ? '<p class="Mystatus"><a href="javascript:void(0);" grep="' + math + '" style="color: #dd514c">已申请售后</a></p>'
                                                 : '<p class="Mystatus"><a href="javascript:void(0);" grep="' + math + '" style="color: #dd514c">售后完结</a></p>') || '') + '\
                                                         <p class="Mystatus">交易完成</p>\
@@ -549,13 +594,13 @@
                                         break;
                                     default:
                                         dom = dom.replace('#orderType#', '<div class="move-right">\
-                                                    <li class="td td-operation">\
+                                                    <li class="td td-operation" style="margin-top:-5%;">\
                                                         <div class="item-status">\
                                                             <p class="Mystatus">'+ (x.Stage == 10 ? '买家取消' : x.Stage == 11 ? '卖家取消' : '双方取消') + '</p>\
                                                             <p class="Mystatus"><a href="javascript:void(0);" name="'+ math + '" style="color: #dd514c">订单详情</a></p>\
                                                         </div>\
                                                     </li>\
-                                                    <li class="td td-operation">\
+                                                    <li class="td td-operation" style="margin-top:-3%;">\
                                                         <p class="Mystatus">交易关闭</p>\
                                                     </li>\
                                                 </div>');
@@ -580,29 +625,47 @@
                                               </div>');
                                 });
 
-                            });
-                            var pagination = new Pagination({
-                                wrap: $('.am-pagination'),
-                                count: data.PageCount,
-                                current: data.CurrentPage,
-                                callback: function (page) {
-                                    var url = location.href;
-                                    if (url.indexOf('page') > -1) {
-                                        if (url.indexOf('&') > -1) {
-                                            url = url.substring(0, url.indexOf('&page'));
-                                        }
-                                        else {
-                                            url = url.substring(0, url.indexOf('?'));
-                                        }
-                                    };
-                                    if (url.indexOf('?') > -1) {
-                                        trunUrl(url + '&page=' + page);
-                                    } else {
-                                        trunUrl(url + '?page=' + page);
-                                    }
+                                $('.am-icon-flag[math="' + math + '"]').popover({
+                                    content: '<p class="flag_title">' + (x.Remark || '') + '</p>\
+                                    <p class="flag_title am-text-right" math="'+ math + '"><a href="javascript:void(0);"><i class="am-icon-edit"></i>设置</a></p>',
+                                });
 
-                                }
+                                $('.flag_title[math="' + math + '"] a').click(function () {
+                                    $('#order_flag').modal({
+                                        relatedTarget: this,
+                                        closeViaDimmer: false,
+                                        closeOnConfirm: false,
+                                        onConfirm: function (e) {
+                                            var remark = $('#flag_Remark').val();
+                                            setflag(x.PurchaseNO, remark);
+                                        },
+                                    });
+                                });
                             });
+                            if (data.PageCount > 1) {
+                                var pagination = new Pagination({
+                                    wrap: $('.am-pagination'),
+                                    count: data.PageCount,
+                                    current: data.CurrentPage,
+                                    callback: function (page) {
+                                        var url = location.href;
+                                        if (url.indexOf('page') > -1) {
+                                            if (url.indexOf('&') > -1) {
+                                                url = url.substring(0, url.indexOf('&page'));
+                                            }
+                                            else {
+                                                url = url.substring(0, url.indexOf('?'));
+                                            }
+                                        };
+                                        if (url.indexOf('?') > -1) {
+                                            trunUrl(url + '&page=' + page);
+                                        } else {
+                                            trunUrl(url + '?page=' + page);
+                                        }
+
+                                    }
+                                });
+                            }
                         }
                         else {
                             $('.sellorder div[id^="sell"]').html('<p class="am-text-center">未找到相关订单</p>');
@@ -790,7 +853,7 @@
 
                             $('.sl[mtd="' + mtd + '"] .text_box').keyup(function () {
                                 var val = $(this).val();
-                                var reg = /^-?\d+$/;
+                                var reg = /^((\d+)|([0-9]+\.[0-9]{0,4}))$/;
                                 if (!reg.test(val)) {
                                     val = t.ToBeSent;
                                 }
@@ -807,11 +870,17 @@
                                 if ($(this).hasClass('add')) {
                                     if (val < t.ToBeSent) {
                                         val++;
+                                        if (val.toString().substr(val.toString().indexOf('.') + 1).length > 4) {
+                                            val = Math.round(val * 10000) / 10000;
+                                        }
                                     }
                                 }
                                 else {
-                                    if (val > 0) {
+                                    if (val - 1 > 0) {
                                         val--;
+                                        if (val.toString().substr(val.toString().indexOf('.') + 1).length > 4) {
+                                            val = Math.round(val * 10000) / 10000;
+                                        }
                                     }
                                 }
                                 $input.val(val);
@@ -841,6 +910,10 @@
                                 $picker.addClass('input-err');
                             }
                             if (err) {
+                                return false;
+                            }
+                            if (eval(postdata.map(function (x) { return x.Qty }).join('+')) == 0) {
+                                alertModal('不可发0件商品！');
                                 return false;
                             }
                             $('#sure_render').attr('disabled', true);
@@ -879,6 +952,26 @@
             }
         });
     }
+
+    function setflag(PurchaseNo, Remark) {
+        $.ajax({
+            type: 'POST',
+            url: posturl + 'SellerCenter/AddRemark',
+            data: {
+                SessionKey: localStorage.lsid,
+                Remark: Remark,
+                PurchaseNo: PurchaseNo
+            },
+            success: function (data) {
+                var ApiResult = CheckApi(data);
+                if (!ApiResult) {
+                    return;
+                }
+                location.reload();
+            }
+        });
+    }
+
 
     function ReAudit(PurchaseNo) {
         $('#ReAudit_modal').modal({
@@ -966,10 +1059,17 @@
     $('#send_billno').change(function () {
         $(this).removeClass('input-err');
     });
-    $('#send_picker').change(function () {
+
+    $('#send_picker,#datepick').change(function () {
         $(this).removeClass('input-err');
     })
 
+    $('body').click(function (e) {
+        if ($(e.target).hasClass('am-icon-flag') || $(e.target).parents('.am-popover').length > 0) {
+            return;
+        }
+        $('.am-popover').removeClass('am-active');
+    });
     // $('#datepick').datepicker();
     // $('#send_picker').datepicker();
 })(window, $)
